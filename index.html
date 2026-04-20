@@ -1,0 +1,3035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBM HackerRank Crash Course — Ethan's 1-Day Guide</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Epilogue:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080c14;
+  --bg2: #0e1420;
+  --bg3: #141b2d;
+  --surface: #1a2235;
+  --surface2: #202840;
+  --border: #2a3550;
+  --cyan: #00d4ff;
+  --green: #00ff9d;
+  --yellow: #ffd166;
+  --red: #ff6b6b;
+  --purple: #c77dff;
+  --text: #e2e8f0;
+  --text2: #8b9ab5;
+  --text3: #4a5568;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Epilogue', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* SIDEBAR */
+#sidebar {
+  width: 260px;
+  min-width: 260px;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+}
+#sidebar::-webkit-scrollbar { width: 4px; }
+#sidebar::-webkit-scrollbar-track { background: var(--bg2); }
+#sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.sidebar-header {
+  padding: 20px 18px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-header .logo {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.sidebar-header h2 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+/* Progress overall */
+.overall-progress {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.progress-label { font-size: 11px; color: var(--text2); margin-bottom: 6px; display: flex; justify-content: space-between; }
+.progress-bar-wrap { background: var(--bg3); border-radius: 4px; height: 6px; overflow: hidden; }
+.progress-bar-fill {
+  background: linear-gradient(90deg, var(--cyan), var(--green));
+  height: 100%;
+  border-radius: 4px;
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+/* Timer */
+.study-timer {
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.timer-icon { font-size: 16px; }
+.timer-display { font-family: var(--mono); font-size: 18px; color: var(--yellow); font-weight: 700; }
+.timer-btns { display: flex; gap: 4px; margin-left: auto; }
+.timer-btn {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: var(--sans);
+  transition: all 0.15s;
+}
+.timer-btn:hover { background: var(--surface); color: var(--text); }
+
+/* NAV CHAPTERS */
+nav { padding: 8px 0; flex: 1; }
+.nav-section-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: var(--text3);
+  text-transform: uppercase;
+  padding: 8px 18px 4px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: all 0.15s;
+  color: var(--text2);
+  font-size: 13px;
+  font-weight: 400;
+  text-decoration: none;
+}
+.nav-item:hover { background: var(--bg3); color: var(--text); border-left-color: var(--border); }
+.nav-item.active { background: rgba(0, 212, 255, 0.08); color: var(--cyan); border-left-color: var(--cyan); font-weight: 600; }
+.nav-item .nav-check { font-size: 13px; min-width: 16px; }
+.nav-item .nav-num { font-family: var(--mono); font-size: 10px; color: var(--text3); margin-left: auto; }
+.nav-item.done .nav-check { color: var(--green); }
+
+/* MAIN CONTENT */
+#main {
+  flex: 1;
+  overflow-y: auto;
+  min-width: 0;
+}
+#main::-webkit-scrollbar { width: 6px; }
+#main::-webkit-scrollbar-track { background: var(--bg); }
+#main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* TOP BAR */
+.topbar {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.topbar h1 { font-size: 16px; font-weight: 700; color: var(--text); }
+.topbar .chapter-badge {
+  background: rgba(0, 212, 255, 0.12);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  color: var(--cyan);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-family: var(--mono);
+}
+.mark-done-btn {
+  margin-left: auto;
+  background: rgba(0, 255, 157, 0.1);
+  border: 1px solid rgba(0, 255, 157, 0.3);
+  color: var(--green);
+  padding: 6px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--sans);
+  transition: all 0.15s;
+}
+.mark-done-btn:hover { background: rgba(0, 255, 157, 0.2); }
+.mark-done-btn.done { background: rgba(0, 255, 157, 0.2); color: var(--green); }
+
+/* CHAPTERS */
+.chapter { display: none; padding: 32px; max-width: 900px; animation: fadeIn 0.3s ease; }
+.chapter.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.chapter-title {
+  font-size: 30px;
+  font-weight: 900;
+  margin-bottom: 6px;
+  line-height: 1.1;
+}
+.chapter-title span { color: var(--cyan); }
+.chapter-subtitle { color: var(--text2); font-size: 15px; margin-bottom: 28px; }
+
+/* TIME ESTIMATE */
+.time-est {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 209, 102, 0.1);
+  border: 1px solid rgba(255, 209, 102, 0.25);
+  color: var(--yellow);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+
+/* CONCEPT CARD */
+.concept-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px 24px;
+  margin-bottom: 20px;
+}
+.concept-card h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--cyan);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.concept-card p { color: var(--text); margin-bottom: 10px; font-size: 14.5px; }
+.concept-card p:last-child { margin-bottom: 0; }
+.concept-card ul, .concept-card ol { padding-left: 20px; }
+.concept-card li { margin-bottom: 5px; font-size: 14.5px; color: var(--text); }
+
+/* CODE BLOCK */
+.code-block { margin: 16px 0; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+.code-label {
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.code-label .lang { color: var(--green); }
+.copy-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--sans);
+  transition: all 0.15s;
+}
+.copy-btn:hover { background: var(--surface2); color: var(--text); }
+.copy-btn.copied { color: var(--green); border-color: var(--green); }
+.code-block pre { margin: 0 !important; border-radius: 0 !important; }
+.code-block code { font-family: var(--mono) !important; font-size: 13px !important; }
+
+/* OUTPUT BLOCK */
+.output-block {
+  background: #000;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin: 8px 0 16px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--green);
+}
+.output-block .out-label { color: var(--text3); font-size: 11px; margin-bottom: 4px; letter-spacing: 1px; text-transform: uppercase; }
+
+/* CALLOUT BOX */
+.callout {
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 16px 0;
+  font-size: 14px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.callout.info { background: rgba(0, 212, 255, 0.07); border: 1px solid rgba(0, 212, 255, 0.2); }
+.callout.warn { background: rgba(255, 209, 102, 0.07); border: 1px solid rgba(255, 209, 102, 0.2); }
+.callout.tip { background: rgba(0, 255, 157, 0.07); border: 1px solid rgba(0, 255, 157, 0.2); }
+.callout.danger { background: rgba(255, 107, 107, 0.07); border: 1px solid rgba(255, 107, 107, 0.2); }
+.callout-icon { font-size: 18px; min-width: 22px; }
+.callout-body { flex: 1; }
+.callout-body strong { display: block; font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.callout.info .callout-body strong { color: var(--cyan); }
+.callout.warn .callout-body strong { color: var(--yellow); }
+.callout.tip .callout-body strong { color: var(--green); }
+.callout.danger .callout-body strong { color: var(--red); }
+
+/* SECTION DIVIDER */
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 32px 0;
+}
+.section-h2 {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 16px;
+  padding-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-h2 .tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: var(--mono);
+  text-transform: uppercase;
+}
+.tag-py { background: rgba(0, 212, 255, 0.15); color: var(--cyan); }
+.tag-js { background: rgba(255, 209, 102, 0.15); color: var(--yellow); }
+.tag-both { background: rgba(199, 125, 255, 0.15); color: var(--purple); }
+
+/* COMPARISON TABLE */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0 20px;
+  font-size: 13.5px;
+}
+.compare-table th {
+  background: var(--bg3);
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text2);
+  border-bottom: 2px solid var(--border);
+}
+.compare-table td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--text);
+}
+.compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+.compare-table td:first-child { color: var(--text2); font-family: var(--sans); font-weight: 600; }
+
+/* QUIZ */
+.quiz-section {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 28px;
+}
+.quiz-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.quiz-header h3 { font-size: 18px; font-weight: 800; }
+.quiz-badge {
+  background: rgba(199, 125, 255, 0.15);
+  border: 1px solid rgba(199, 125, 255, 0.3);
+  color: var(--purple);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 20px;
+}
+.quiz-q { margin-bottom: 22px; }
+.quiz-q .q-text {
+  font-size: 14.5px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.quiz-q .q-code {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  color: var(--green);
+}
+.quiz-options { display: flex; flex-direction: column; gap: 8px; }
+.quiz-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 14px;
+}
+.quiz-opt:hover { background: var(--surface); border-color: var(--cyan); }
+.quiz-opt.correct { background: rgba(0, 255, 157, 0.1); border-color: var(--green); color: var(--green); }
+.quiz-opt.wrong { background: rgba(255, 107, 107, 0.1); border-color: var(--red); color: var(--red); }
+.quiz-opt.disabled { pointer-events: none; }
+.quiz-opt .opt-key {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--surface2);
+  padding: 2px 7px;
+  border-radius: 4px;
+  color: var(--text2);
+  min-width: 26px;
+  text-align: center;
+}
+.quiz-feedback {
+  margin-top: 8px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 13.5px;
+  display: none;
+}
+.quiz-feedback.show { display: block; }
+.quiz-feedback.ok { background: rgba(0,255,157,0.1); border: 1px solid rgba(0,255,157,0.25); color: var(--green); }
+.quiz-feedback.bad { background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.25); color: var(--red); }
+.quiz-score {
+  margin-top: 16px;
+  font-size: 20px;
+  font-weight: 900;
+  text-align: center;
+  color: var(--cyan);
+  display: none;
+}
+.quiz-reset-btn {
+  display: block;
+  margin: 12px auto 0;
+  background: rgba(0,212,255,0.12);
+  border: 1px solid rgba(0,212,255,0.3);
+  color: var(--cyan);
+  padding: 8px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 13px;
+  display: none;
+  transition: all 0.15s;
+}
+.quiz-reset-btn.visible { display: block; }
+.quiz-reset-btn:hover { background: rgba(0,212,255,0.2); }
+
+/* PRACTICE PROBLEMS */
+.problem-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.problem-header {
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s;
+}
+.problem-header:hover { background: var(--surface2); }
+.diff-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 2px 9px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+.diff-easy { background: rgba(0,255,157,0.15); color: var(--green); }
+.diff-med { background: rgba(255,209,102,0.15); color: var(--yellow); }
+.diff-hard { background: rgba(255,107,107,0.15); color: var(--red); }
+.problem-title { font-size: 15px; font-weight: 700; flex: 1; }
+.problem-toggle { color: var(--text3); font-size: 18px; transition: transform 0.2s; }
+.problem-card.open .problem-toggle { transform: rotate(90deg); }
+.problem-body { display: none; padding: 0 20px 20px; border-top: 1px solid var(--border); }
+.problem-card.open .problem-body { display: block; }
+.problem-body p { margin: 12px 0 8px; color: var(--text); font-size: 14px; }
+.problem-body .example-box {
+  background: var(--bg3);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin: 6px 0;
+  font-size: 13px;
+}
+.problem-body .example-box .ex-label { color: var(--text3); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.problem-body .ex-val { font-family: var(--mono); color: var(--cyan); }
+.solution-toggle {
+  background: rgba(199,125,255,0.1);
+  border: 1px solid rgba(199,125,255,0.25);
+  color: var(--purple);
+  padding: 7px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--sans);
+  margin-top: 12px;
+  transition: all 0.15s;
+}
+.solution-toggle:hover { background: rgba(199,125,255,0.18); }
+.solution-block { display: none; margin-top: 10px; }
+.solution-block.show { display: block; }
+
+/* CHEAT SHEET */
+.cheat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.cheat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+}
+.cheat-card h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cyan);
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.cheat-card code {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--green);
+  background: var(--bg3);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.cheat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12.5px;
+  gap: 10px;
+}
+.cheat-row:last-child { border-bottom: none; }
+.cheat-row .cr-left { color: var(--text2); flex: 1; font-size: 12px; }
+.cheat-row .cr-right { font-family: var(--mono); color: var(--green); font-size: 11.5px; text-align: right; }
+
+/* SCHEDULE GRID */
+.schedule-grid {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.sched-time {
+  background: var(--bg3);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--yellow);
+  font-weight: 700;
+  text-align: center;
+}
+.sched-item {
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sched-item:last-child, .sched-time:last-child { border-bottom: none; }
+.sched-pill {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+.sched-study { background: rgba(0,212,255,0.12); color: var(--cyan); }
+.sched-break { background: rgba(0,255,157,0.12); color: var(--green); }
+.sched-practice { background: rgba(199,125,255,0.12); color: var(--purple); }
+.sched-review { background: rgba(255,209,102,0.12); color: var(--yellow); }
+.sched-desc { font-size: 13.5px; color: var(--text); flex: 1; }
+.sched-dur { font-size: 11px; color: var(--text3); font-family: var(--mono); white-space: nowrap; }
+
+/* WELCOME HERO */
+.hero-banner {
+  background: linear-gradient(135deg, rgba(0,212,255,0.05), rgba(0,255,157,0.05));
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 14px;
+  padding: 28px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-banner::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero-banner h2 { font-size: 22px; font-weight: 900; margin-bottom: 6px; }
+.hero-banner p { color: var(--text2); font-size: 14px; max-width: 600px; line-height: 1.6; }
+.hero-stats {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.hero-stat {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 16px;
+  text-align: center;
+}
+.hero-stat .hs-num { font-size: 22px; font-weight: 900; color: var(--cyan); font-family: var(--mono); }
+.hero-stat .hs-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; }
+
+/* HIGHLIGHT INLINES */
+.hl { color: var(--cyan); font-weight: 600; }
+.hl-g { color: var(--green); font-weight: 600; }
+.hl-y { color: var(--yellow); font-weight: 600; }
+.hl-p { color: var(--purple); font-weight: 600; }
+.hl-r { color: var(--red); font-weight: 600; }
+.mono { font-family: var(--mono); font-size: 13px; background: var(--bg3); padding: 1px 6px; border-radius: 3px; color: var(--green); }
+
+/* KEY TERM */
+.keyterm {
+  display: inline-block;
+  background: rgba(199,125,255,0.12);
+  border: 1px solid rgba(199,125,255,0.25);
+  color: var(--purple);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 1px 8px;
+  border-radius: 4px;
+  font-family: var(--mono);
+}
+
+/* Algorithm steps */
+.algo-steps { counter-reset: step; padding-left: 0; list-style: none; }
+.algo-steps li {
+  counter-increment: step;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+.algo-steps li::before {
+  content: counter(step);
+  background: var(--cyan);
+  color: var(--bg);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 900;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* FOOTER */
+.chapter-footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 9px 18px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav-btn:hover { background: var(--surface2); border-color: var(--cyan); color: var(--cyan); }
+
+/* Two-column layout */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.two-col .concept-card { margin-bottom: 0; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  #sidebar { display: none; }
+  .chapter { padding: 20px 16px; }
+  .cheat-grid { grid-template-columns: 1fr; }
+  .two-col { grid-template-columns: 1fr; }
+  .hero-stats { gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="sidebar-header">
+    <div class="logo">IBM HACKERRANK PREP</div>
+    <h2>1-Day Coding<br>Crash Course</h2>
+  </div>
+  <div class="overall-progress">
+    <div class="progress-label"><span>Overall Progress</span><span id="prog-pct">0%</span></div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="prog-fill"></div></div>
+  </div>
+  <div class="study-timer">
+    <span class="timer-icon">⏱️</span>
+    <span class="timer-display" id="timer-display">00:00:00</span>
+    <div class="timer-btns">
+      <button class="timer-btn" id="timer-start" onclick="timerStart()">▶</button>
+      <button class="timer-btn" id="timer-pause" onclick="timerPause()">⏸</button>
+      <button class="timer-btn" onclick="timerReset()">↺</button>
+    </div>
+  </div>
+  <nav>
+    <div class="nav-section-label">Start Here</div>
+    <a class="nav-item active" onclick="showChapter(0)" href="#">
+      <span class="nav-check" id="chk-0">○</span>
+      <span>Welcome & Schedule</span>
+      <span class="nav-num">Intro</span>
+    </a>
+    <div class="nav-section-label">Core Concepts</div>
+    <a class="nav-item" onclick="showChapter(1)" href="#">
+      <span class="nav-check" id="chk-1">○</span>
+      <span>Variables & Data Types</span>
+      <span class="nav-num">Ch 1</span>
+    </a>
+    <a class="nav-item" onclick="showChapter(2)" href="#">
+      <span class="nav-check" id="chk-2">○</span>
+      <span>Input & Output</span>
+      <span class="nav-num">Ch 2</span>
+    </a>
+    <a class="nav-item" onclick="showChapter(3)" href="#">
+      <span class="nav-check" id="chk-3">○</span>
+      <span>Operators & Expressions</span>
+      <span class="nav-num">Ch 3</span>
+    </a>
+    <a class="nav-item" onclick="showChapter(4)" href="#">
+      <span class="nav-check" id="chk-4">○</span>
+      <span>Control Flow (If/Else)</span>
+      <span class="nav-num">Ch 4</span>
+    </a>
+    <a class="nav-item" onclick="showChapter(5)" href="#">
+      <span class="nav-check" id="chk-5">○</span>
+      <span>Loops (for & while)</span>
+      <span class="nav-num">Ch 5</span>
+    </a>
+    <a class="nav-item" onclick="showChapter(6)" href="#">
+      <span class="nav-check" id="chk-6">○</span>
+      <span>Functions</span>
+      <span class="nav-num">Ch 6</span>
+    </a>
+    <div class="nav-section-label">Data Structures</div>
+    <a class="nav-item" onclick="showChapter(7)" href="#">
+      <span class="nav-check" id="chk-7">○</span>
+      <span>Lists & Arrays</span>
+      <span class="nav-num">Ch 7</span>
+    </a>
+    <a class="nav-item" onclick="showChapter(8)" href="#">
+      <span class="nav-check" id="chk-8">○</span>
+      <span>Strings</span>
+      <span class="nav-num">Ch 8</span>
+    </a>
+    <a class="nav-item" onclick="showChapter(9)" href="#">
+      <span class="nav-check" id="chk-9">○</span>
+      <span>Dicts & Objects</span>
+      <span class="nav-num">Ch 9</span>
+    </a>
+    <div class="nav-section-label">Problem Solving</div>
+    <a class="nav-item" onclick="showChapter(10)" href="#">
+      <span class="nav-check" id="chk-10">○</span>
+      <span>Common Patterns</span>
+      <span class="nav-num">Ch 10</span>
+    </a>
+    <a class="nav-item" onclick="showChapter(11)" href="#">
+      <span class="nav-check" id="chk-11">○</span>
+      <span>Math Problems</span>
+      <span class="nav-num">Ch 11</span>
+    </a>
+    <a class="nav-item" onclick="showChapter(12)" href="#">
+      <span class="nav-check" id="chk-12">○</span>
+      <span>String Problems</span>
+      <span class="nav-num">Ch 12</span>
+    </a>
+    <a class="nav-item" onclick="showChapter(13)" href="#">
+      <span class="nav-check" id="chk-13">○</span>
+      <span>Array Problems</span>
+      <span class="nav-num">Ch 13</span>
+    </a>
+    <div class="nav-section-label">Final Prep</div>
+    <a class="nav-item" onclick="showChapter(14)" href="#">
+      <span class="nav-check" id="chk-14">○</span>
+      <span>Mock Practice Test</span>
+      <span class="nav-num">Ch 14</span>
+    </a>
+    <a class="nav-item" onclick="showChapter(15)" href="#">
+      <span class="nav-check" id="chk-15">○</span>
+      <span>⚡ Cheat Sheet</span>
+      <span class="nav-num">Ref</span>
+    </a>
+  </nav>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+  <div class="topbar">
+    <h1 id="topbar-title">Welcome & Schedule</h1>
+    <span class="chapter-badge" id="topbar-badge">INTRO</span>
+    <button class="mark-done-btn" id="done-btn" onclick="markDone()">✓ Mark Done</button>
+  </div>
+
+  <!-- ====== CHAPTER 0: WELCOME ====== -->
+  <div class="chapter active" id="ch-0">
+    <div class="chapter-title">Welcome, <span>Ethan</span>. 👋</div>
+    <div class="chapter-subtitle">Your complete 1-day IBM HackerRank coding crash course. Built from scratch, for beginners.</div>
+
+    <div class="hero-banner">
+      <h2>🎯 The Mission: Pass the IBM HackerRank Coding Assessment</h2>
+      <p>You have <strong>75 minutes</strong>, <strong>2 coding questions</strong>, and access to <strong>Python3, JavaScript, Java, Ruby,</strong> or <strong>TypeScript</strong>. This guide will take you from zero to being able to solve beginner-to-intermediate problems. <strong>We recommend using Python3</strong> — it's the most beginner-friendly language available.</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hs-num">15</div><div class="hs-label">Chapters</div></div>
+        <div class="hero-stat"><div class="hs-num">50+</div><div class="hs-label">Code Examples</div></div>
+        <div class="hero-stat"><div class="hs-num">30+</div><div class="hs-label">Quiz Questions</div></div>
+        <div class="hero-stat"><div class="hs-num">20+</div><div class="hs-label">Practice Problems</div></div>
+        <div class="hero-stat"><div class="hs-num">8–10h</div><div class="hs-label">Study Time</div></div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <span class="callout-icon">⚠️</span>
+      <div class="callout-body">
+        <strong>Be Honest With Yourself</strong>
+        This guide is realistic. You are a beginner. You will not master programming in one day. But you CAN learn enough to attempt and partially solve HackerRank problems. Every point helps. Use Python3 — it reads almost like English.
+      </div>
+    </div>
+
+    <hr class="section-divider">
+    <div class="section-h2">📅 Your 1-Day Study Schedule</div>
+    <p style="color:var(--text2); font-size:14px; margin-bottom:14px;">Follow this schedule closely. Start the timer above. Take all breaks — your brain needs them.</p>
+
+    <div class="schedule-grid">
+      <div class="sched-time">6:00 AM</div>
+      <div class="sched-item"><span class="sched-pill sched-study">Study</span><span class="sched-desc">Chapters 0–2: Welcome, Variables, Input/Output</span><span class="sched-dur">60 min</span></div>
+      <div class="sched-time">7:00 AM</div>
+      <div class="sched-item"><span class="sched-pill sched-study">Study</span><span class="sched-desc">Chapter 3–4: Operators, Control Flow (If/Else)</span><span class="sched-dur">60 min</span></div>
+      <div class="sched-time">8:00 AM</div>
+      <div class="sched-item"><span class="sched-pill sched-break">Break</span><span class="sched-desc">Breakfast. Stretch. Walk around. No screens.</span><span class="sched-dur">20 min</span></div>
+      <div class="sched-time">8:20 AM</div>
+      <div class="sched-item"><span class="sched-pill sched-study">Study</span><span class="sched-desc">Chapter 5–6: Loops and Functions</span><span class="sched-dur">70 min</span></div>
+      <div class="sched-time">9:30 AM</div>
+      <div class="sched-item"><span class="sched-pill sched-practice">Practice</span><span class="sched-desc">Quiz review for Ch 1–6. Redo any missed questions.</span><span class="sched-dur">30 min</span></div>
+      <div class="sched-time">10:00 AM</div>
+      <div class="sched-item"><span class="sched-pill sched-break">Break</span><span class="sched-desc">Snack. Hydrate. Rest eyes for 10 minutes.</span><span class="sched-dur">15 min</span></div>
+      <div class="sched-time">10:15 AM</div>
+      <div class="sched-item"><span class="sched-pill sched-study">Study</span><span class="sched-desc">Chapters 7–9: Lists, Strings, Dictionaries</span><span class="sched-dur">75 min</span></div>
+      <div class="sched-time">11:30 AM</div>
+      <div class="sched-item"><span class="sched-pill sched-study">Study</span><span class="sched-desc">Chapters 10–11: Patterns & Math Problems</span><span class="sched-dur">60 min</span></div>
+      <div class="sched-time">12:30 PM</div>
+      <div class="sched-item"><span class="sched-pill sched-break">Break</span><span class="sched-desc">Lunch. Full 30-minute break. No studying.</span><span class="sched-dur">30 min</span></div>
+      <div class="sched-time">1:00 PM</div>
+      <div class="sched-item"><span class="sched-pill sched-study">Study</span><span class="sched-desc">Chapters 12–13: String & Array Problems</span><span class="sched-dur">60 min</span></div>
+      <div class="sched-time">2:00 PM</div>
+      <div class="sched-item"><span class="sched-pill sched-practice">Practice</span><span class="sched-desc">Chapter 14: Full Mock Practice Test (timed, 75 min)</span><span class="sched-dur">90 min</span></div>
+      <div class="sched-time">3:30 PM</div>
+      <div class="sched-item"><span class="sched-pill sched-break">Break</span><span class="sched-desc">Physical break. Get some sunlight if possible.</span><span class="sched-dur">20 min</span></div>
+      <div class="sched-time">3:50 PM</div>
+      <div class="sched-item"><span class="sched-pill sched-review">Review</span><span class="sched-desc">Chapter 15: Review Cheat Sheet. Memorize key syntax.</span><span class="sched-dur">40 min</span></div>
+      <div class="sched-time">4:30 PM</div>
+      <div class="sched-item"><span class="sched-pill sched-practice">Practice</span><span class="sched-desc">Re-attempt any problems you got wrong. Focus on weak areas.</span><span class="sched-dur">60 min</span></div>
+      <div class="sched-time">5:30 PM</div>
+      <div class="sched-item"><span class="sched-pill sched-review">Review</span><span class="sched-desc">Final skim of all chapters. Light review only. Then sleep early.</span><span class="sched-dur">30 min</span></div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <strong>Test Strategy: What To Do During the Actual HackerRank Test</strong>
+        1. Read BOTH problems before starting either. Pick the easier one first. 2. Write pseudocode (plain English steps) before writing actual code. 3. Test with the sample inputs first. 4. Even a partial answer is better than nothing — HackerRank gives partial credit. 5. Don't panic. Breathe. You've prepared.
+      </div>
+    </div>
+
+    <div class="callout info">
+      <span class="callout-icon">🔵</span>
+      <div class="callout-body">
+        <strong>Why Python3?</strong>
+        Python3 is allowed on the test and is the world's most beginner-friendly language. <code>print("Hello")</code> just works. No semicolons needed. No type declarations. Indentation is the structure. Most IBM HackerRank intern problems can be solved cleanly in Python3.
+      </div>
+    </div>
+
+    <div class="chapter-footer">
+      <div></div>
+      <button class="nav-btn" onclick="showChapter(1)">Next: Variables & Data Types →</button>
+    </div>
+  </div>
+
+  <!-- ====== CHAPTER 1: VARIABLES & DATA TYPES ====== -->
+  <div class="chapter" id="ch-1">
+    <div class="chapter-title">Ch 1: <span>Variables</span> & Data Types</div>
+    <div class="chapter-subtitle">The building blocks of every program. Learn to store and label information.</div>
+    <div class="time-est">⏱ Estimated time: 40 minutes</div>
+
+    <div class="concept-card">
+      <h3>🧠 What is a Variable?</h3>
+      <p>A <strong>variable</strong> is a named container that holds a value. Think of it like a labeled box. You put something in the box, give the box a name, and later you can grab what's inside by using that name.</p>
+      <p>In Python, you don't need to declare the type — just write: <span class="mono">name = value</span></p>
+    </div>
+
+    <div class="section-h2">Python3 Syntax <span class="tag tag-py">PYTHON</span></div>
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># Variables in Python — NO 'var', NO semicolons, NO type declarations
+name = "Ethan"           # String: text, always in quotes
+age = 21                 # Integer: whole number
+gpa = 3.85               # Float: decimal number
+is_student = True        # Boolean: True or False (capital T and F!)
+nothing = None           # None: represents "no value" (like null)
+
+# You can print any variable
+print(name)              # Output: Ethan
+print(age)               # Output: 21
+print(type(age))         # Output: &lt;class 'int'&gt;
+
+# Variable names: use lowercase + underscores (snake_case)
+first_name = "Ethan"
+last_name = "Taruc"
+full_name = first_name + " " + last_name  # Concatenation
+print(full_name)         # Output: Ethan Taruc
+
+# You can reassign a variable anytime
+x = 5
+print(x)   # 5
+x = 10
+print(x)   # 10 — it changed!</code></pre>
+    </div>
+    <div class="output-block"><div class="out-label">Output</div>Ethan<br>21<br>&lt;class 'int'&gt;<br>Ethan Taruc<br>5<br>10</div>
+
+    <div class="concept-card">
+      <h3>📦 The 5 Core Data Types</h3>
+      <table class="compare-table">
+        <tr><th>Type</th><th>Name</th><th>Example</th><th>Notes</th></tr>
+        <tr><td>str</td><td>String</td><td><code>"hello"</code> or <code>'hello'</code></td><td>Text. Use quotes.</td></tr>
+        <tr><td>int</td><td>Integer</td><td><code>42</code>, <code>-7</code>, <code>0</code></td><td>Whole numbers.</td></tr>
+        <tr><td>float</td><td>Float</td><td><code>3.14</code>, <code>-0.5</code></td><td>Decimal numbers.</td></tr>
+        <tr><td>bool</td><td>Boolean</td><td><code>True</code>, <code>False</code></td><td>Always capitalized!</td></tr>
+        <tr><td>NoneType</td><td>None</td><td><code>None</code></td><td>Empty/no value.</td></tr>
+      </table>
+    </div>
+
+    <div class="section-h2">Type Conversion (Casting) <span class="tag tag-py">PYTHON</span></div>
+    <div class="concept-card">
+      <h3>🔄 Converting Between Types</h3>
+      <p>Often on HackerRank, you'll read input as a string but need it as a number. This is called <strong>type casting</strong>.</p>
+    </div>
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># Converting types
+x = "42"          # This is a string "42", NOT the number 42
+y = int(x)        # Now y = 42 (integer)
+z = float(x)      # Now z = 42.0 (float)
+
+# The reverse
+num = 99
+text = str(num)   # text = "99" (string)
+
+# Why this matters on HackerRank:
+user_input = input()    # input() ALWAYS returns a string
+number = int(user_input)  # You MUST convert if you want to do math
+
+# Multiple values on one line
+a, b = map(int, input().split())  # Read "5 10" → a=5, b=10
+print(a + b)  # 15
+
+# int() can fail! If "abc" is passed to int(), it crashes.
+# On HackerRank, you can trust the input format matches what's specified.</code></pre>
+    </div>
+
+    <div class="section-h2">JavaScript Equivalent <span class="tag tag-js">JS</span></div>
+    <div class="code-block">
+      <div class="code-label"><span class="lang">javascript</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-javascript">// In JavaScript, use let, const, or var
+let name = "Ethan";       // can be reassigned
+const PI = 3.14159;       // constant, cannot be reassigned
+var age = 21;             // old way, avoid using var
+
+// Types in JS (loosely typed like Python)
+let str = "hello";        // string
+let num = 42;             // number (JS uses one type for int + float)
+let dec = 3.14;           // also number
+let isTrue = true;        // boolean (lowercase!)
+let empty = null;         // null (like Python's None)
+let undef = undefined;    // variable declared but no value
+
+// Check type
+console.log(typeof name);  // "string"
+console.log(typeof num);   // "number"
+
+// Type conversion
+let numStr = "42";
+let parsed = parseInt(numStr);   // 42
+let parsedF = parseFloat("3.14"); // 3.14
+let backToStr = String(99);      // "99"</code></pre>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <strong>Key Difference: Python vs JavaScript Booleans</strong>
+        Python: <code>True</code> / <code>False</code> (capital T and F). JavaScript: <code>true</code> / <code>false</code> (all lowercase). Mixing these up causes bugs!
+      </div>
+    </div>
+
+    <!-- QUIZ CH 1 -->
+    <div class="quiz-section" id="quiz-1">
+      <div class="quiz-header">
+        <h3>🧪 Chapter 1 Quiz</h3>
+        <span class="quiz-badge">4 Questions</span>
+      </div>
+      <div class="quiz-q" id="q1-1">
+        <div class="q-text">1. What is the data type of <code>x = 3.7</code> in Python?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q1-1','A')"><span class="opt-key">A</span> int</div>
+          <div class="quiz-opt" onclick="answer(this,'q1-1','B')"><span class="opt-key">B</span> float ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q1-1','C')"><span class="opt-key">C</span> str</div>
+          <div class="quiz-opt" onclick="answer(this,'q1-1','D')"><span class="opt-key">D</span> bool</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q1-1"></div>
+      </div>
+      <div class="quiz-q" id="q1-2">
+        <div class="q-text">2. What does <code>int("5")</code> return in Python?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q1-2','A')"><span class="opt-key">A</span> "5" (a string)</div>
+          <div class="quiz-opt" onclick="answer(this,'q1-2','B')"><span class="opt-key">B</span> 5 (an integer) ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q1-2','C')"><span class="opt-key">C</span> 5.0 (a float)</div>
+          <div class="quiz-opt" onclick="answer(this,'q1-2','D')"><span class="opt-key">D</span> Error</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q1-2"></div>
+      </div>
+      <div class="quiz-q" id="q1-3">
+        <div class="q-text">3. In Python, what is the correct boolean value for "true"?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q1-3','A')"><span class="opt-key">A</span> true</div>
+          <div class="quiz-opt" onclick="answer(this,'q1-3','B')"><span class="opt-key">B</span> TRUE</div>
+          <div class="quiz-opt" onclick="answer(this,'q1-3','C')"><span class="opt-key">C</span> True ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q1-3','D')"><span class="opt-key">D</span> 1</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q1-3"></div>
+      </div>
+      <div class="quiz-q" id="q1-4">
+        <div class="q-text">4. Which line correctly creates a variable named <code>my_score</code> with value 95 in Python?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q1-4','A')"><span class="opt-key">A</span> int my_score = 95;</div>
+          <div class="quiz-opt" onclick="answer(this,'q1-4','B')"><span class="opt-key">B</span> var my_score = 95</div>
+          <div class="quiz-opt" onclick="answer(this,'q1-4','C')"><span class="opt-key">C</span> my_score = 95 ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q1-4','D')"><span class="opt-key">D</span> my_score := 95</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q1-4"></div>
+      </div>
+      <div class="quiz-score" id="score-1"></div>
+      <button class="quiz-reset-btn" id="reset-1" onclick="resetQuiz(1,4)">↺ Retry Quiz</button>
+    </div>
+
+    <div class="chapter-footer">
+      <button class="nav-btn" onclick="showChapter(0)">← Welcome</button>
+      <button class="nav-btn" onclick="showChapter(2)">Next: Input & Output →</button>
+    </div>
+  </div>
+
+  <!-- ====== CHAPTER 2: INPUT & OUTPUT ====== -->
+  <div class="chapter" id="ch-2">
+    <div class="chapter-title">Ch 2: <span>Input</span> & Output</div>
+    <div class="chapter-subtitle">How programs receive data and display results. Critical for every HackerRank problem.</div>
+    <div class="time-est">⏱ Estimated time: 30 minutes</div>
+
+    <div class="callout danger">
+      <span class="callout-icon">🚨</span>
+      <div class="callout-body">
+        <strong>Most Critical Skill for HackerRank</strong>
+        Every single coding problem on HackerRank requires you to READ input with <code>input()</code> and WRITE output with <code>print()</code>. If you mess this up, you get zero points even if your logic is correct. Study this chapter carefully.
+      </div>
+    </div>
+
+    <div class="section-h2">Output with print() <span class="tag tag-py">PYTHON</span></div>
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># Basic print
+print("Hello, World!")       # Hello, World!
+print(42)                    # 42
+print(3.14)                  # 3.14
+
+# Print multiple things (comma-separated, adds space between)
+print("Name:", "Ethan")      # Name: Ethan
+print(1, 2, 3)               # 1 2 3
+
+# f-strings (most useful for formatted output!)
+name = "Ethan"
+score = 95
+print(f"My name is {name} and my score is {score}")
+# Output: My name is Ethan and my score is 95
+
+# f-string with expressions
+x = 10
+print(f"Double x is {x * 2}")   # Double x is 20
+
+# Print with sep (custom separator)
+print(1, 2, 3, sep="-")      # 1-2-3
+print(1, 2, 3, sep=", ")     # 1, 2, 3
+
+# Print with end (default is newline \n)
+print("Hello", end=" ")
+print("World")               # Hello World (same line!)
+
+# Print nothing = blank line
+print()</code></pre>
+    </div>
+
+    <div class="section-h2">Input with input() <span class="tag tag-py">PYTHON</span></div>
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># input() pauses and waits for user to type something, then press Enter
+# It ALWAYS returns a STRING
+
+name = input()          # User types: Ethan
+print(name)             # Ethan
+
+# If you need a number from input, CONVERT it
+n = int(input())        # User types: 42
+print(n + 10)           # 52
+
+# ---- READING MULTIPLE INPUTS ----
+
+# Case 1: Two numbers on separate lines
+a = int(input())   # User types: 5
+b = int(input())   # User types: 3
+print(a + b)       # 8
+
+# Case 2: Two numbers on SAME line separated by space
+# Input: "5 3"
+a, b = map(int, input().split())
+print(a + b)       # 8
+
+# Case 3: A list of N numbers on one line
+# Input: "1 2 3 4 5"
+nums = list(map(int, input().split()))
+print(nums)        # [1, 2, 3, 4, 5]
+print(sum(nums))   # 15
+
+# Case 4: Read N then read N numbers
+n = int(input())   # First line: how many numbers
+nums = list(map(int, input().split()))  # Second line: the numbers
+
+# Case 5: Read a string then convert
+s = input()        # User types: hello
+print(s.upper())   # HELLO</code></pre>
+    </div>
+
+    <div class="callout info">
+      <span class="callout-icon">📘</span>
+      <div class="callout-body">
+        <strong>What is .split()?</strong>
+        <code>input().split()</code> takes a string like <code>"5 10 3"</code> and splits it into a list of strings: <code>["5", "10", "3"]</code>. Then <code>map(int, ...)</code> converts each one to an integer. This is extremely common on HackerRank.
+      </div>
+    </div>
+
+    <div class="section-h2">HackerRank Pattern Examples <span class="tag tag-py">PYTHON</span></div>
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3 — HackerRank Standard Patterns</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># PATTERN 1: Read single integer, do something, print result
+n = int(input())
+print(n * n)  # print square of n
+
+# PATTERN 2: Read two integers on same line, print their sum
+a, b = map(int, input().split())
+print(a + b)
+
+# PATTERN 3: Read N numbers, find their sum
+n = int(input())
+total = 0
+for i in range(n):
+    x = int(input())
+    total += x
+print(total)
+
+# PATTERN 4: Read a string, do string operations
+s = input()
+print(len(s))          # length of string
+print(s[::-1])         # reversed string
+print(s.upper())       # uppercase
+
+# PATTERN 5: Read array on one line, process it
+arr = list(map(int, input().split()))
+print(max(arr))   # largest number
+print(min(arr))   # smallest number
+print(sum(arr))   # sum of all</code></pre>
+    </div>
+
+    <!-- QUIZ CH 2 -->
+    <div class="quiz-section" id="quiz-2">
+      <div class="quiz-header"><h3>🧪 Chapter 2 Quiz</h3><span class="quiz-badge">3 Questions</span></div>
+      <div class="quiz-q" id="q2-1">
+        <div class="q-text">1. What does <code>input()</code> always return?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q2-1','A')"><span class="opt-key">A</span> An integer</div>
+          <div class="quiz-opt" onclick="answer(this,'q2-1','B')"><span class="opt-key">B</span> A string ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q2-1','C')"><span class="opt-key">C</span> A float</div>
+          <div class="quiz-opt" onclick="answer(this,'q2-1','D')"><span class="opt-key">D</span> A boolean</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q2-1"></div>
+      </div>
+      <div class="quiz-q" id="q2-2">
+        <div class="q-text">2. The input is <code>"10 20"</code> (on one line). Which code correctly reads both numbers as integers?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q2-2','A')"><span class="opt-key">A</span> a, b = input()</div>
+          <div class="quiz-opt" onclick="answer(this,'q2-2','B')"><span class="opt-key">B</span> a, b = int(input().split())</div>
+          <div class="quiz-opt" onclick="answer(this,'q2-2','C')"><span class="opt-key">C</span> a, b = map(int, input().split()) ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q2-2','D')"><span class="opt-key">D</span> a = input(); b = input()</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q2-2"></div>
+      </div>
+      <div class="quiz-q" id="q2-3">
+        <div class="q-text">3. What does <code>print(f"Score: {5 * 3}")</code> output?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q2-3','A')"><span class="opt-key">A</span> Score: {5 * 3}</div>
+          <div class="quiz-opt" onclick="answer(this,'q2-3','B')"><span class="opt-key">B</span> Score: 15 ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q2-3','C')"><span class="opt-key">C</span> Score: 5 * 3</div>
+          <div class="quiz-opt" onclick="answer(this,'q2-3','D')"><span class="opt-key">D</span> Error</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q2-3"></div>
+      </div>
+      <div class="quiz-score" id="score-2"></div>
+      <button class="quiz-reset-btn" id="reset-2" onclick="resetQuiz(2,3)">↺ Retry Quiz</button>
+    </div>
+
+    <div class="chapter-footer">
+      <button class="nav-btn" onclick="showChapter(1)">← Variables</button>
+      <button class="nav-btn" onclick="showChapter(3)">Next: Operators →</button>
+    </div>
+  </div>
+
+  <!-- ====== CHAPTER 3: OPERATORS ====== -->
+  <div class="chapter" id="ch-3">
+    <div class="chapter-title">Ch 3: <span>Operators</span> & Expressions</div>
+    <div class="chapter-subtitle">Math, comparisons, and logic — the tools to compute and decide.</div>
+    <div class="time-est">⏱ Estimated time: 35 minutes</div>
+
+    <div class="section-h2">Arithmetic Operators <span class="tag tag-py">PYTHON</span></div>
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python">a = 17
+b = 5
+
+print(a + b)   # 22   — Addition
+print(a - b)   # 12   — Subtraction
+print(a * b)   # 85   — Multiplication
+print(a / b)   # 3.4  — Division (always returns float!)
+print(a // b)  # 3    — Integer/Floor Division (drops decimal) ← very useful!
+print(a % b)   # 2    — Modulo (remainder after division) ← very useful!
+print(a ** b)  # 1419857 — Exponentiation (17 to the power of 5)
+
+# The % (modulo) operator is KEY in coding problems:
+# - Check if a number is even: n % 2 == 0
+# - Check if divisible by 3: n % 3 == 0
+# - Get last digit: n % 10
+# - Wrap around (circular indexing): index % length
+
+print(10 % 2)  # 0 → 10 is even
+print(9 % 2)   # 1 → 9 is odd
+print(123 % 10)  # 3 → last digit is 3
+
+# Augmented assignment (shorthand)
+x = 10
+x += 5   # same as x = x + 5 → x is now 15
+x -= 3   # x is now 12
+x *= 2   # x is now 24
+x //= 5  # x is now 4</code></pre>
+    </div>
+
+    <div class="section-h2">Comparison Operators <span class="tag tag-py">PYTHON</span></div>
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># Comparison operators return True or False (Boolean)
+a, b = 10, 5
+
+print(a == b)   # False  — equal to (NOTE: == not =)
+print(a != b)   # True   — not equal to
+print(a > b)    # True   — greater than
+print(a < b)    # False  — less than
+print(a >= b)   # True   — greater than or equal
+print(a <= b)   # False  — less than or equal
+
+# CRITICAL: == vs =
+# = is ASSIGNMENT: x = 5 (sets x to 5)
+# == is COMPARISON: x == 5 (asks "is x equal to 5?")
+
+x = 5
+print(x == 5)   # True
+print(x == 6)   # False</code></pre>
+    </div>
+
+    <div class="section-h2">Logical Operators <span class="tag tag-py">PYTHON</span></div>
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># and: BOTH conditions must be True
+# or:  AT LEAST ONE condition must be True
+# not: INVERTS True → False, False → True
+
+age = 20
+has_id = True
+
+print(age >= 18 and has_id)    # True  (both true)
+print(age >= 18 and not has_id) # False (not has_id = False)
+print(age < 18 or has_id)      # True  (second is true)
+
+# Chained comparisons (Python special feature!)
+x = 5
+print(1 < x < 10)    # True — x is between 1 and 10
+print(1 < x < 4)     # False
+
+# Real-world example
+score = 85
+grade_a = score >= 90
+grade_b = score >= 80 and score < 90
+print(grade_b)  # True</code></pre>
+    </div>
+
+    <!-- QUIZ CH 3 -->
+    <div class="quiz-section" id="quiz-3">
+      <div class="quiz-header"><h3>🧪 Chapter 3 Quiz</h3><span class="quiz-badge">4 Questions</span></div>
+      <div class="quiz-q" id="q3-1">
+        <div class="q-text">1. What is the result of <code>17 % 5</code>?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q3-1','A')"><span class="opt-key">A</span> 3</div>
+          <div class="quiz-opt" onclick="answer(this,'q3-1','B')"><span class="opt-key">B</span> 2 ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q3-1','C')"><span class="opt-key">C</span> 3.4</div>
+          <div class="quiz-opt" onclick="answer(this,'q3-1','D')"><span class="opt-key">D</span> 0</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q3-1"></div>
+      </div>
+      <div class="quiz-q" id="q3-2">
+        <div class="q-text">2. How do you check if a number <code>n</code> is even in Python?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q3-2','A')"><span class="opt-key">A</span> n % 2 == 0 ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q3-2','B')"><span class="opt-key">B</span> n / 2 == 0</div>
+          <div class="quiz-opt" onclick="answer(this,'q3-2','C')"><span class="opt-key">C</span> n % 2 = 0</div>
+          <div class="quiz-opt" onclick="answer(this,'q3-2','D')"><span class="opt-key">D</span> n // 2 == 0</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q3-2"></div>
+      </div>
+      <div class="quiz-q" id="q3-3">
+        <div class="q-text">3. What does <code>True and False</code> evaluate to?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q3-3','A')"><span class="opt-key">A</span> True</div>
+          <div class="quiz-opt" onclick="answer(this,'q3-3','B')"><span class="opt-key">B</span> False ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q3-3','C')"><span class="opt-key">C</span> None</div>
+          <div class="quiz-opt" onclick="answer(this,'q3-3','D')"><span class="opt-key">D</span> Error</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q3-3"></div>
+      </div>
+      <div class="quiz-q" id="q3-4">
+        <div class="q-text">4. What is the result of <code>10 // 3</code>?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q3-4','A')"><span class="opt-key">A</span> 3.33</div>
+          <div class="quiz-opt" onclick="answer(this,'q3-4','B')"><span class="opt-key">B</span> 3 ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q3-4','C')"><span class="opt-key">C</span> 4</div>
+          <div class="quiz-opt" onclick="answer(this,'q3-4','D')"><span class="opt-key">D</span> 1</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q3-4"></div>
+      </div>
+      <div class="quiz-score" id="score-3"></div>
+      <button class="quiz-reset-btn" id="reset-3" onclick="resetQuiz(3,4)">↺ Retry Quiz</button>
+    </div>
+
+    <div class="chapter-footer">
+      <button class="nav-btn" onclick="showChapter(2)">← Input/Output</button>
+      <button class="nav-btn" onclick="showChapter(4)">Next: Control Flow →</button>
+    </div>
+  </div>
+
+  <!-- ====== CHAPTER 4: CONTROL FLOW ====== -->
+  <div class="chapter" id="ch-4">
+    <div class="chapter-title">Ch 4: <span>Control Flow</span> — If / Elif / Else</div>
+    <div class="chapter-subtitle">Make your program decide. The most fundamental logic structure in all of programming.</div>
+    <div class="time-est">⏱ Estimated time: 40 minutes</div>
+
+    <div class="concept-card">
+      <h3>🤔 What is Control Flow?</h3>
+      <p>Without control flow, a program just runs top to bottom. With <strong>if/elif/else</strong>, your program can take different paths based on conditions. Think of it like a road with forks.</p>
+      <p><strong>Python uses indentation (4 spaces or 1 tab) to define blocks of code.</strong> This is critical — wrong indentation = error!</p>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3 — if / elif / else</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># Basic if statement
+age = 20
+
+if age >= 18:
+    print("Adult")     # ← 4 spaces indent!
+
+# if-else
+if age >= 18:
+    print("Adult")
+else:
+    print("Minor")
+
+# if-elif-else (check multiple conditions)
+score = 75
+
+if score >= 90:
+    print("A")
+elif score >= 80:
+    print("B")
+elif score >= 70:
+    print("C")      # This prints because 75 >= 70
+elif score >= 60:
+    print("D")
+else:
+    print("F")
+
+# NESTED if (if inside if)
+has_ticket = True
+vip = False
+
+if has_ticket:
+    if vip:
+        print("VIP section")
+    else:
+        print("General section")
+else:
+    print("No entry")
+
+# One-liner (ternary) — useful for simple conditions
+x = 10
+result = "even" if x % 2 == 0 else "odd"
+print(result)   # even</code></pre>
+    </div>
+
+    <div class="section-h2">HackerRank-Style Patterns <span class="tag tag-py">PYTHON</span></div>
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3 — Common patterns</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># PATTERN: FizzBuzz (classic interview problem!)
+# For numbers 1-20: print "Fizz" if divisible by 3,
+# "Buzz" if by 5, "FizzBuzz" if both, else the number
+
+n = int(input())
+if n % 3 == 0 and n % 5 == 0:
+    print("FizzBuzz")
+elif n % 3 == 0:
+    print("Fizz")
+elif n % 5 == 0:
+    print("Buzz")
+else:
+    print(n)
+
+# PATTERN: Absolute value without abs()
+x = int(input())
+if x < 0:
+    x = -x
+print(x)
+
+# PATTERN: Max of two numbers without max()
+a = int(input())
+b = int(input())
+if a > b:
+    print(a)
+else:
+    print(b)
+
+# PATTERN: Grade classification
+score = int(input())
+if score >= 90:
+    grade = "A"
+elif score >= 80:
+    grade = "B"
+elif score >= 70:
+    grade = "C"
+elif score >= 60:
+    grade = "D"
+else:
+    grade = "F"
+print(grade)</code></pre>
+    </div>
+
+    <div class="callout warn">
+      <span class="callout-icon">⚠️</span>
+      <div class="callout-body">
+        <strong>Common Beginner Mistake: Indentation</strong>
+        Python cares deeply about spacing. Code inside an <code>if</code> block MUST be indented. If you get an <code>IndentationError</code>, check your spacing. Use 4 spaces (not a mix of tabs and spaces).
+      </div>
+    </div>
+
+    <!-- QUIZ CH 4 -->
+    <div class="quiz-section" id="quiz-4">
+      <div class="quiz-header"><h3>🧪 Chapter 4 Quiz</h3><span class="quiz-badge">3 Questions</span></div>
+      <div class="quiz-q" id="q4-1">
+        <div class="q-text">1. What does this code print if <code>x = 15</code>?</div>
+        <div class="q-code">if x % 3 == 0 and x % 5 == 0:<br>&nbsp;&nbsp;&nbsp;&nbsp;print("FizzBuzz")<br>elif x % 3 == 0:<br>&nbsp;&nbsp;&nbsp;&nbsp;print("Fizz")<br>elif x % 5 == 0:<br>&nbsp;&nbsp;&nbsp;&nbsp;print("Buzz")</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q4-1','A')"><span class="opt-key">A</span> Fizz</div>
+          <div class="quiz-opt" onclick="answer(this,'q4-1','B')"><span class="opt-key">B</span> Buzz</div>
+          <div class="quiz-opt" onclick="answer(this,'q4-1','C')"><span class="opt-key">C</span> FizzBuzz ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q4-1','D')"><span class="opt-key">D</span> Nothing</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q4-1"></div>
+      </div>
+      <div class="quiz-q" id="q4-2">
+        <div class="q-text">2. In Python, what defines a block of code inside an if statement?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q4-2','A')"><span class="opt-key">A</span> Curly braces { }</div>
+          <div class="quiz-opt" onclick="answer(this,'q4-2','B')"><span class="opt-key">B</span> Indentation (spaces) ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q4-2','C')"><span class="opt-key">C</span> Parentheses ( )</div>
+          <div class="quiz-opt" onclick="answer(this,'q4-2','D')"><span class="opt-key">D</span> begin...end keywords</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q4-2"></div>
+      </div>
+      <div class="quiz-q" id="q4-3">
+        <div class="q-text">3. What is the output of: <code>x = 7</code>, <code>print("big" if x > 5 else "small")</code>?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q4-3','A')"><span class="opt-key">A</span> small</div>
+          <div class="quiz-opt" onclick="answer(this,'q4-3','B')"><span class="opt-key">B</span> big ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q4-3','C')"><span class="opt-key">C</span> True</div>
+          <div class="quiz-opt" onclick="answer(this,'q4-3','D')"><span class="opt-key">D</span> Error</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q4-3"></div>
+      </div>
+      <div class="quiz-score" id="score-4"></div>
+      <button class="quiz-reset-btn" id="reset-4" onclick="resetQuiz(4,3)">↺ Retry Quiz</button>
+    </div>
+
+    <div class="chapter-footer">
+      <button class="nav-btn" onclick="showChapter(3)">← Operators</button>
+      <button class="nav-btn" onclick="showChapter(5)">Next: Loops →</button>
+    </div>
+  </div>
+
+  <!-- ====== CHAPTER 5: LOOPS ====== -->
+  <div class="chapter" id="ch-5">
+    <div class="chapter-title">Ch 5: <span>Loops</span> — for & while</div>
+    <div class="chapter-subtitle">Repeat code automatically. The engine of almost every coding problem.</div>
+    <div class="time-est">⏱ Estimated time: 50 minutes</div>
+
+    <div class="concept-card">
+      <h3>🔁 Why Loops?</h3>
+      <p>Loops let you run the same code many times without copy-pasting it. Instead of <code>print(1)</code>, <code>print(2)</code>, <code>print(3)</code> ... you write one loop that handles all of it.</p>
+      <p>Python has two loops: <span class="hl">for</span> (when you know how many times) and <span class="hl">while</span> (when you loop until a condition is false).</p>
+    </div>
+
+    <div class="section-h2">for Loops + range() <span class="tag tag-py">PYTHON</span></div>
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># range(stop) → 0 to stop-1
+for i in range(5):
+    print(i)        # 0, 1, 2, 3, 4
+
+# range(start, stop) → start to stop-1
+for i in range(1, 6):
+    print(i)        # 1, 2, 3, 4, 5
+
+# range(start, stop, step)
+for i in range(0, 10, 2):
+    print(i)        # 0, 2, 4, 6, 8 (even numbers!)
+
+# Counting down
+for i in range(5, 0, -1):
+    print(i)        # 5, 4, 3, 2, 1
+
+# Loop over a list
+fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(fruit)    # apple, banana, cherry
+
+# Loop with index using enumerate
+for i, fruit in enumerate(fruits):
+    print(i, fruit)  # 0 apple, 1 banana, 2 cherry
+
+# Sum of 1 to N
+n = int(input())
+total = 0
+for i in range(1, n + 1):
+    total += i
+print(total)   # Sum formula: n*(n+1)//2, but loops work too!</code></pre>
+    </div>
+
+    <div class="section-h2">while Loops <span class="tag tag-py">PYTHON</span></div>
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># while loop: keeps running while condition is True
+count = 0
+while count < 5:
+    print(count)   # 0, 1, 2, 3, 4
+    count += 1     # ← DON'T FORGET THIS or you get infinite loop!
+
+# Reading until a sentinel value
+# Example: keep reading numbers until 0 is entered
+total = 0
+while True:
+    n = int(input())
+    if n == 0:
+        break      # break exits the loop immediately
+    total += n
+print(total)
+
+# continue: skip to next iteration
+for i in range(10):
+    if i % 2 == 0:
+        continue   # skip even numbers
+    print(i)       # 1, 3, 5, 7, 9</code></pre>
+    </div>
+
+    <div class="section-h2">Nested Loops <span class="tag tag-py">PYTHON</span></div>
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3 — nested loops</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># A loop inside a loop
+# Prints a multiplication table
+for i in range(1, 4):
+    for j in range(1, 4):
+        print(i * j, end=" ")
+    print()   # newline after each row
+# Output:
+# 1 2 3
+# 2 4 6
+# 3 6 9
+
+# Print a star pattern (common HackerRank problem!)
+# Input: 4
+# Output:
+# *
+# **
+# ***
+# ****
+n = int(input())
+for i in range(1, n + 1):
+    print("*" * i)   # multiply string by number!</code></pre>
+    </div>
+
+    <!-- QUIZ CH 5 -->
+    <div class="quiz-section" id="quiz-5">
+      <div class="quiz-header"><h3>🧪 Chapter 5 Quiz</h3><span class="quiz-badge">4 Questions</span></div>
+      <div class="quiz-q" id="q5-1">
+        <div class="q-text">1. What does <code>range(3, 8)</code> produce?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q5-1','A')"><span class="opt-key">A</span> 3, 4, 5, 6, 7, 8</div>
+          <div class="quiz-opt" onclick="answer(this,'q5-1','B')"><span class="opt-key">B</span> 3, 4, 5, 6, 7 ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q5-1','C')"><span class="opt-key">C</span> 0, 1, 2, 3, 4</div>
+          <div class="quiz-opt" onclick="answer(this,'q5-1','D')"><span class="opt-key">D</span> 8, 7, 6, 5, 4, 3</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q5-1"></div>
+      </div>
+      <div class="quiz-q" id="q5-2">
+        <div class="q-text">2. What keyword immediately exits a loop?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q5-2','A')"><span class="opt-key">A</span> stop</div>
+          <div class="quiz-opt" onclick="answer(this,'q5-2','B')"><span class="opt-key">B</span> exit</div>
+          <div class="quiz-opt" onclick="answer(this,'q5-2','C')"><span class="opt-key">C</span> break ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q5-2','D')"><span class="opt-key">D</span> return</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q5-2"></div>
+      </div>
+      <div class="quiz-q" id="q5-3">
+        <div class="q-text">3. What does <code>"*" * 4</code> produce in Python?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q5-3','A')"><span class="opt-key">A</span> 4</div>
+          <div class="quiz-opt" onclick="answer(this,'q5-3','B')"><span class="opt-key">B</span> ****  ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q5-3','C')"><span class="opt-key">C</span> Error</div>
+          <div class="quiz-opt" onclick="answer(this,'q5-3','D')"><span class="opt-key">D</span> *</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q5-3"></div>
+      </div>
+      <div class="quiz-q" id="q5-4">
+        <div class="q-text">4. How many times does this loop run? <code>for i in range(0, 10, 3):</code></div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q5-4','A')"><span class="opt-key">A</span> 10</div>
+          <div class="quiz-opt" onclick="answer(this,'q5-4','B')"><span class="opt-key">B</span> 3</div>
+          <div class="quiz-opt" onclick="answer(this,'q5-4','C')"><span class="opt-key">C</span> 4 ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q5-4','D')"><span class="opt-key">D</span> 5</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q5-4"></div>
+      </div>
+      <div class="quiz-score" id="score-5"></div>
+      <button class="quiz-reset-btn" id="reset-5" onclick="resetQuiz(5,4)">↺ Retry Quiz</button>
+    </div>
+
+    <div class="chapter-footer">
+      <button class="nav-btn" onclick="showChapter(4)">← Control Flow</button>
+      <button class="nav-btn" onclick="showChapter(6)">Next: Functions →</button>
+    </div>
+  </div>
+
+  <!-- ====== CHAPTER 6: FUNCTIONS ====== -->
+  <div class="chapter" id="ch-6">
+    <div class="chapter-title">Ch 6: <span>Functions</span></div>
+    <div class="chapter-subtitle">Reusable blocks of code. Write once, use anywhere.</div>
+    <div class="time-est">⏱ Estimated time: 40 minutes</div>
+
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3 — Defining and Calling Functions</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># Define a function with 'def'
+def greet():
+    print("Hello, World!")
+
+# Call the function
+greet()   # Hello, World!
+
+# Function with parameters (inputs)
+def greet_person(name):
+    print(f"Hello, {name}!")
+
+greet_person("Ethan")   # Hello, Ethan!
+greet_person("IBM")     # Hello, IBM!
+
+# Function with RETURN value
+def add(a, b):
+    return a + b
+
+result = add(3, 5)
+print(result)   # 8
+
+# Function with default parameter
+def power(base, exp=2):    # exp defaults to 2
+    return base ** exp
+
+print(power(3))      # 9  (3^2)
+print(power(2, 10))  # 1024 (2^10)
+
+# Multiple return values
+def min_max(lst):
+    return min(lst), max(lst)
+
+small, big = min_max([3, 1, 4, 1, 5, 9])
+print(small, big)   # 1 9
+
+# SCOPE: variables inside a function are LOCAL
+x = 10  # global
+
+def change():
+    x = 99  # this is a NEW local variable, doesn't affect global x
+    print(x)
+
+change()    # 99
+print(x)    # 10 — global x unchanged</code></pre>
+    </div>
+
+    <div class="section-h2">Useful Built-in Functions <span class="tag tag-py">PYTHON</span></div>
+    <div class="concept-card">
+      <h3>📚 Python's Built-ins You Must Know</h3>
+      <table class="compare-table">
+        <tr><th>Function</th><th>What it does</th><th>Example</th></tr>
+        <tr><td>len()</td><td>Length of string/list</td><td><code>len("hello") → 5</code></td></tr>
+        <tr><td>range()</td><td>Number sequence</td><td><code>range(5) → 0,1,2,3,4</code></td></tr>
+        <tr><td>int()</td><td>Convert to integer</td><td><code>int("42") → 42</code></td></tr>
+        <tr><td>str()</td><td>Convert to string</td><td><code>str(42) → "42"</code></td></tr>
+        <tr><td>max()</td><td>Largest value</td><td><code>max([3,1,4]) → 4</code></td></tr>
+        <tr><td>min()</td><td>Smallest value</td><td><code>min([3,1,4]) → 1</code></td></tr>
+        <tr><td>sum()</td><td>Sum of list</td><td><code>sum([1,2,3]) → 6</code></td></tr>
+        <tr><td>abs()</td><td>Absolute value</td><td><code>abs(-5) → 5</code></td></tr>
+        <tr><td>sorted()</td><td>Sort a list (new)</td><td><code>sorted([3,1,2]) → [1,2,3]</code></td></tr>
+        <tr><td>reversed()</td><td>Reverse iterable</td><td><code>list(reversed([1,2,3]))</code></td></tr>
+        <tr><td>input()</td><td>Read user input</td><td><code>input() → "hello"</code></td></tr>
+        <tr><td>print()</td><td>Output to console</td><td><code>print("hi")</code></td></tr>
+        <tr><td>enumerate()</td><td>Index + value pairs</td><td><code>for i,v in enumerate(lst)</code></td></tr>
+        <tr><td>map()</td><td>Apply function to iterable</td><td><code>map(int, ["1","2"])</code></td></tr>
+      </table>
+    </div>
+
+    <!-- QUIZ CH 6 -->
+    <div class="quiz-section" id="quiz-6">
+      <div class="quiz-header"><h3>🧪 Chapter 6 Quiz</h3><span class="quiz-badge">3 Questions</span></div>
+      <div class="quiz-q" id="q6-1">
+        <div class="q-text">1. What does this function return when called with <code>add(4, 6)</code>?</div>
+        <div class="q-code">def add(a, b):<br>&nbsp;&nbsp;&nbsp;&nbsp;return a + b</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q6-1','A')"><span class="opt-key">A</span> "4 + 6"</div>
+          <div class="quiz-opt" onclick="answer(this,'q6-1','B')"><span class="opt-key">B</span> 10 ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q6-1','C')"><span class="opt-key">C</span> None</div>
+          <div class="quiz-opt" onclick="answer(this,'q6-1','D')"><span class="opt-key">D</span> Error</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q6-1"></div>
+      </div>
+      <div class="quiz-q" id="q6-2">
+        <div class="q-text">2. What is <code>abs(-17)</code>?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q6-2','A')"><span class="opt-key">A</span> -17</div>
+          <div class="quiz-opt" onclick="answer(this,'q6-2','B')"><span class="opt-key">B</span> 17 ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q6-2','C')"><span class="opt-key">C</span> 0</div>
+          <div class="quiz-opt" onclick="answer(this,'q6-2','D')"><span class="opt-key">D</span> Error</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q6-2"></div>
+      </div>
+      <div class="quiz-q" id="q6-3">
+        <div class="q-text">3. In Python, what keyword is used to define a function?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q6-3','A')"><span class="opt-key">A</span> function</div>
+          <div class="quiz-opt" onclick="answer(this,'q6-3','B')"><span class="opt-key">B</span> func</div>
+          <div class="quiz-opt" onclick="answer(this,'q6-3','C')"><span class="opt-key">C</span> def ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q6-3','D')"><span class="opt-key">D</span> define</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q6-3"></div>
+      </div>
+      <div class="quiz-score" id="score-6"></div>
+      <button class="quiz-reset-btn" id="reset-6" onclick="resetQuiz(6,3)">↺ Retry Quiz</button>
+    </div>
+
+    <div class="chapter-footer">
+      <button class="nav-btn" onclick="showChapter(5)">← Loops</button>
+      <button class="nav-btn" onclick="showChapter(7)">Next: Lists & Arrays →</button>
+    </div>
+  </div>
+
+  <!-- ====== CHAPTER 7: LISTS ====== -->
+  <div class="chapter" id="ch-7">
+    <div class="chapter-title">Ch 7: <span>Lists</span> & Arrays</div>
+    <div class="chapter-subtitle">Store multiple values in one variable. Essential for almost every problem.</div>
+    <div class="time-est">⏱ Estimated time: 45 minutes</div>
+
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3 — List Basics</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># Create a list (ordered, mutable, allows duplicates)
+nums = [3, 1, 4, 1, 5, 9, 2, 6]
+words = ["hello", "world", "python"]
+mixed = [1, "two", 3.0, True]
+empty = []
+
+# Access by INDEX (starts at 0!)
+print(nums[0])    # 3  (first element)
+print(nums[1])    # 1  (second element)
+print(nums[-1])   # 6  (last element)
+print(nums[-2])   # 2  (second to last)
+
+# Slicing: list[start:stop:step]
+print(nums[0:3])  # [3, 1, 4]   — index 0,1,2
+print(nums[2:])   # [4, 1, 5, 9, 2, 6]   — from index 2 to end
+print(nums[:4])   # [3, 1, 4, 1]   — from start to index 3
+print(nums[::-1]) # [6, 2, 9, 5, 1, 4, 1, 3] — reversed!
+
+# Common list operations
+print(len(nums))        # 8 — number of elements
+print(sum(nums))        # 31
+print(max(nums))        # 9
+print(min(nums))        # 1
+print(3 in nums)        # True — check membership
+print(sorted(nums))     # [1, 1, 2, 3, 4, 5, 6, 9] — sorted copy
+
+# Modifying a list
+nums.append(7)          # Add to END: [3,1,4,1,5,9,2,6,7]
+nums.insert(0, 99)      # Insert at index 0: [99,3,1,...]
+nums.remove(1)          # Remove FIRST occurrence of 1
+nums.pop()              # Remove and return LAST element
+nums.pop(0)             # Remove element at index 0
+nums.sort()             # Sort IN PLACE (modifies original)
+nums.reverse()          # Reverse IN PLACE
+
+# Looping through a list
+for n in nums:
+    print(n)
+
+# List comprehension (powerful shortcut!)
+squares = [x**2 for x in range(1, 6)]
+print(squares)  # [1, 4, 9, 16, 25]
+
+evens = [x for x in range(20) if x % 2 == 0]
+print(evens)    # [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]</code></pre>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <strong>List vs Array</strong>
+        In Python, lists ARE the "array". You don't need to import anything. JavaScript calls them arrays (<code>[]</code>). The concept is identical — an ordered collection of items accessible by index.
+      </div>
+    </div>
+
+    <div class="quiz-section" id="quiz-7">
+      <div class="quiz-header"><h3>🧪 Chapter 7 Quiz</h3><span class="quiz-badge">3 Questions</span></div>
+      <div class="quiz-q" id="q7-1">
+        <div class="q-text">1. Given <code>a = [10, 20, 30, 40]</code>, what is <code>a[-1]</code>?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q7-1','A')"><span class="opt-key">A</span> 10</div>
+          <div class="quiz-opt" onclick="answer(this,'q7-1','B')"><span class="opt-key">B</span> 30</div>
+          <div class="quiz-opt" onclick="answer(this,'q7-1','C')"><span class="opt-key">C</span> 40 ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q7-1','D')"><span class="opt-key">D</span> Error</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q7-1"></div>
+      </div>
+      <div class="quiz-q" id="q7-2">
+        <div class="q-text">2. Which method adds an element to the END of a Python list?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q7-2','A')"><span class="opt-key">A</span> .add()</div>
+          <div class="quiz-opt" onclick="answer(this,'q7-2','B')"><span class="opt-key">B</span> .push()</div>
+          <div class="quiz-opt" onclick="answer(this,'q7-2','C')"><span class="opt-key">C</span> .append() ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q7-2','D')"><span class="opt-key">D</span> .insert()</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q7-2"></div>
+      </div>
+      <div class="quiz-q" id="q7-3">
+        <div class="q-text">3. What does <code>[x**2 for x in range(4)]</code> produce?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q7-3','A')"><span class="opt-key">A</span> [1, 4, 9, 16]</div>
+          <div class="quiz-opt" onclick="answer(this,'q7-3','B')"><span class="opt-key">B</span> [0, 1, 4, 9] ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q7-3','C')"><span class="opt-key">C</span> [1, 2, 3, 4]</div>
+          <div class="quiz-opt" onclick="answer(this,'q7-3','D')"><span class="opt-key">D</span> [0, 1, 2, 3]</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q7-3"></div>
+      </div>
+      <div class="quiz-score" id="score-7"></div>
+      <button class="quiz-reset-btn" id="reset-7" onclick="resetQuiz(7,3)">↺ Retry Quiz</button>
+    </div>
+    <div class="chapter-footer">
+      <button class="nav-btn" onclick="showChapter(6)">← Functions</button>
+      <button class="nav-btn" onclick="showChapter(8)">Next: Strings →</button>
+    </div>
+  </div>
+
+  <!-- ====== CHAPTER 8: STRINGS ====== -->
+  <div class="chapter" id="ch-8">
+    <div class="chapter-title">Ch 8: <span>Strings</span></div>
+    <div class="chapter-subtitle">Text manipulation. One of the most common problem types on coding tests.</div>
+    <div class="time-est">⏱ Estimated time: 45 minutes</div>
+
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3 — String Methods</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python">s = "Hello, World!"
+
+# Basic info
+print(len(s))          # 13
+print(s[0])            # H    — strings are indexable!
+print(s[-1])           # !
+print(s[0:5])          # Hello — slicing works the same!
+print(s[::-1])         # !dlroW ,olleH — reverse a string
+
+# Case methods
+print(s.upper())       # HELLO, WORLD!
+print(s.lower())       # hello, world!
+print(s.title())       # Hello, World! (every word capitalized)
+
+# Search methods
+print(s.startswith("Hello"))   # True
+print(s.endswith("!"))         # True
+print("World" in s)            # True
+print(s.find("World"))         # 7  (index where it starts)
+print(s.count("l"))            # 3  (how many 'l's)
+
+# Modify methods (strings are IMMUTABLE — these return NEW strings)
+print(s.replace("World", "Python"))   # Hello, Python!
+print(s.strip())       # removes whitespace from both ends
+print("  hello  ".strip())   # "hello"
+print(s.split(", "))   # ['Hello', 'World!']
+print(" ".join(["a", "b", "c"]))   # "a b c"
+
+# Check character types
+print("123".isdigit())     # True
+print("abc".isalpha())     # True
+print("abc123".isalnum())  # True
+print("  ".isspace())      # True
+
+# String formatting
+name = "IBM"
+score = 98.5
+print(f"Company: {name}, Score: {score:.1f}")   # 2 decimal places
+print(f"{'hi':>10}")   # right-aligned in 10 chars:         hi
+
+# Useful: iterate over characters
+for char in "hello":
+    print(char)    # h, e, l, l, o
+
+# Convert string to list of chars
+chars = list("hello")   # ['h', 'e', 'l', 'l', 'o']</code></pre>
+    </div>
+
+    <div class="quiz-section" id="quiz-8">
+      <div class="quiz-header"><h3>🧪 Chapter 8 Quiz</h3><span class="quiz-badge">3 Questions</span></div>
+      <div class="quiz-q" id="q8-1">
+        <div class="q-text">1. What does <code>"hello"[::-1]</code> return?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q8-1','A')"><span class="opt-key">A</span> "hello"</div>
+          <div class="quiz-opt" onclick="answer(this,'q8-1','B')"><span class="opt-key">B</span> "olleh" ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q8-1','C')"><span class="opt-key">C</span> ["o","l","l","e","h"]</div>
+          <div class="quiz-opt" onclick="answer(this,'q8-1','D')"><span class="opt-key">D</span> Error</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q8-1"></div>
+      </div>
+      <div class="quiz-q" id="q8-2">
+        <div class="q-text">2. What does <code>"Hello World".lower()</code> return?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q8-2','A')"><span class="opt-key">A</span> "HELLO WORLD"</div>
+          <div class="quiz-opt" onclick="answer(this,'q8-2','B')"><span class="opt-key">B</span> "Hello World"</div>
+          <div class="quiz-opt" onclick="answer(this,'q8-2','C')"><span class="opt-key">C</span> "hello world" ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q8-2','D')"><span class="opt-key">D</span> None</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q8-2"></div>
+      </div>
+      <div class="quiz-q" id="q8-3">
+        <div class="q-text">3. What does <code>"a,b,c".split(",")</code> return?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q8-3','A')"><span class="opt-key">A</span> "abc"</div>
+          <div class="quiz-opt" onclick="answer(this,'q8-3','B')"><span class="opt-key">B</span> ['a', 'b', 'c'] ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q8-3','C')"><span class="opt-key">C</span> ('a', 'b', 'c')</div>
+          <div class="quiz-opt" onclick="answer(this,'q8-3','D')"><span class="opt-key">D</span> 3</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q8-3"></div>
+      </div>
+      <div class="quiz-score" id="score-8"></div>
+      <button class="quiz-reset-btn" id="reset-8" onclick="resetQuiz(8,3)">↺ Retry Quiz</button>
+    </div>
+    <div class="chapter-footer">
+      <button class="nav-btn" onclick="showChapter(7)">← Lists</button>
+      <button class="nav-btn" onclick="showChapter(9)">Next: Dictionaries →</button>
+    </div>
+  </div>
+
+  <!-- ====== CHAPTER 9: DICTIONARIES ====== -->
+  <div class="chapter" id="ch-9">
+    <div class="chapter-title">Ch 9: <span>Dictionaries</span> & Objects</div>
+    <div class="chapter-subtitle">Key-value storage. The most powerful data structure for frequency counting.</div>
+    <div class="time-est">⏱ Estimated time: 40 minutes</div>
+
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3 — Dictionary Basics</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># A dictionary maps keys to values (like a real dictionary: word → meaning)
+person = {
+    "name": "Ethan",
+    "age": 21,
+    "is_student": True
+}
+
+# Access by key
+print(person["name"])     # Ethan
+print(person.get("age"))  # 21 (safer — returns None if key missing)
+
+# Modify / Add
+person["age"] = 22               # Update existing
+person["university"] = "PUP"     # Add new key
+
+# Delete
+del person["is_student"]
+person.pop("university")   # also returns the value
+
+# Check if key exists
+if "name" in person:
+    print("has name")
+
+# Iterate
+for key in person:
+    print(key, "→", person[key])
+
+for key, value in person.items():
+    print(f"{key}: {value}")
+
+print(person.keys())    # dict_keys(['name', 'age'])
+print(person.values())  # dict_values(['Ethan', 22])
+
+# ---- FREQUENCY COUNTING (very common pattern!) ----
+# Count how many times each character appears in a string
+s = "mississippi"
+freq = {}
+for char in s:
+    if char in freq:
+        freq[char] += 1
+    else:
+        freq[char] = 1
+print(freq)   # {'m': 1, 'i': 4, 's': 4, 'p': 2}
+
+# Easier way using .get()
+freq = {}
+for char in s:
+    freq[char] = freq.get(char, 0) + 1
+
+# Even easier: defaultdict or Counter
+from collections import Counter
+freq = Counter(s)
+print(freq)     # Counter({'i': 4, 's': 4, 'p': 2, 'm': 1})</code></pre>
+    </div>
+
+    <div class="quiz-section" id="quiz-9">
+      <div class="quiz-header"><h3>🧪 Chapter 9 Quiz</h3><span class="quiz-badge">2 Questions</span></div>
+      <div class="quiz-q" id="q9-1">
+        <div class="q-text">1. Given <code>d = {"x": 5, "y": 10}</code>, what is <code>d["y"]</code>?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q9-1','A')"><span class="opt-key">A</span> 5</div>
+          <div class="quiz-opt" onclick="answer(this,'q9-1','B')"><span class="opt-key">B</span> 10 ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q9-1','C')"><span class="opt-key">C</span> "y"</div>
+          <div class="quiz-opt" onclick="answer(this,'q9-1','D')"><span class="opt-key">D</span> Error</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q9-1"></div>
+      </div>
+      <div class="quiz-q" id="q9-2">
+        <div class="q-text">2. What is the best way to count frequency of elements?</div>
+        <div class="quiz-options">
+          <div class="quiz-opt" onclick="answer(this,'q9-2','A')"><span class="opt-key">A</span> Use a list</div>
+          <div class="quiz-opt" onclick="answer(this,'q9-2','B')"><span class="opt-key">B</span> Use a dictionary with key=element, value=count ✓</div>
+          <div class="quiz-opt" onclick="answer(this,'q9-2','C')"><span class="opt-key">C</span> Use a string</div>
+          <div class="quiz-opt" onclick="answer(this,'q9-2','D')"><span class="opt-key">D</span> Sort the list first</div>
+        </div>
+        <div class="quiz-feedback" id="fb-q9-2"></div>
+      </div>
+      <div class="quiz-score" id="score-9"></div>
+      <button class="quiz-reset-btn" id="reset-9" onclick="resetQuiz(9,2)">↺ Retry Quiz</button>
+    </div>
+    <div class="chapter-footer">
+      <button class="nav-btn" onclick="showChapter(8)">← Strings</button>
+      <button class="nav-btn" onclick="showChapter(10)">Next: Patterns →</button>
+    </div>
+  </div>
+
+  <!-- ====== CHAPTER 10: PATTERNS ====== -->
+  <div class="chapter" id="ch-10">
+    <div class="chapter-title">Ch 10: <span>Problem-Solving</span> Patterns</div>
+    <div class="chapter-subtitle">The secret techniques that solve 80% of coding problems. Learn to recognize them.</div>
+    <div class="time-est">⏱ Estimated time: 60 minutes</div>
+
+    <div class="concept-card">
+      <h3>🗺️ The 5 Most Common Patterns on HackerRank</h3>
+      <ul>
+        <li><strong>1. Loop + Accumulator</strong> — Sum, count, or build a result through a loop</li>
+        <li><strong>2. Frequency Map</strong> — Count occurrences using a dictionary</li>
+        <li><strong>3. Two Pointers</strong> — Use two indices to scan from both ends</li>
+        <li><strong>4. Sliding Window</strong> — Look at a "window" of consecutive elements</li>
+        <li><strong>5. Sort then Process</strong> — Sort first to make the problem easier</li>
+      </ul>
+    </div>
+
+    <div class="section-h2">Pattern 1: Loop + Accumulator <span class="tag tag-py">PYTHON</span></div>
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># Find the sum of all even numbers in a list
+nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+total = 0          # ← accumulator starts at 0
+
+for n in nums:
+    if n % 2 == 0:   # if even
+        total += n   # add to accumulator
+
+print(total)   # 30 (2+4+6+8+10)
+
+# Count numbers greater than 5
+count = 0
+for n in nums:
+    if n > 5:
+        count += 1
+print(count)   # 5</code></pre>
+    </div>
+
+    <div class="section-h2">Pattern 2: Two Pointers <span class="tag tag-py">PYTHON</span></div>
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># Check if a string is a palindrome (reads same forward and backward)
+# "racecar" → palindrome, "hello" → not
+
+def is_palindrome(s):
+    left = 0              # pointer starting from left
+    right = len(s) - 1    # pointer starting from right
+    
+    while left < right:
+        if s[left] != s[right]:
+            return False  # mismatch found
+        left += 1
+        right -= 1
+    
+    return True   # no mismatch found
+
+print(is_palindrome("racecar"))  # True
+print(is_palindrome("hello"))    # False
+print(is_palindrome("madam"))    # True
+
+# Simpler way in Python:
+def is_palindrome_easy(s):
+    return s == s[::-1]   # compare string to its reverse
+
+# Two pointers to find pair that sums to target (sorted array)
+def two_sum_sorted(arr, target):
+    left, right = 0, len(arr) - 1
+    while left < right:
+        current = arr[left] + arr[right]
+        if current == target:
+            return [left, right]
+        elif current < target:
+            left += 1
+        else:
+            right -= 1
+    return []</code></pre>
+    </div>
+
+    <div class="section-h2">Pattern 3: Frequency Map <span class="tag tag-py">PYTHON</span></div>
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># Check if two strings are anagrams
+# "listen" and "silent" → same characters, different order → anagram!
+
+def is_anagram(s1, s2):
+    if len(s1) != len(s2):
+        return False
+    
+    count = {}
+    for char in s1:
+        count[char] = count.get(char, 0) + 1
+    for char in s2:
+        count[char] = count.get(char, 0) - 1
+    
+    return all(v == 0 for v in count.values())
+
+print(is_anagram("listen", "silent"))  # True
+print(is_anagram("hello", "world"))    # False
+
+# Find the most frequent element
+nums = [1, 3, 2, 3, 4, 3, 1]
+freq = {}
+for n in nums:
+    freq[n] = freq.get(n, 0) + 1
+
+most_common = max(freq, key=freq.get)
+print(most_common)   # 3 (appears 3 times)</code></pre>
+    </div>
+
+    <div class="section-h2">Pattern 4: Sort + Process <span class="tag tag-py">PYTHON</span></div>
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># Find the second largest number
+nums = [5, 3, 8, 1, 9, 2]
+sorted_nums = sorted(set(nums))   # sort + remove duplicates
+print(sorted_nums[-2])            # 8
+
+# Find the median
+def median(arr):
+    sorted_arr = sorted(arr)
+    n = len(sorted_arr)
+    if n % 2 == 0:
+        return (sorted_arr[n//2 - 1] + sorted_arr[n//2]) / 2
+    else:
+        return sorted_arr[n//2]
+
+print(median([3, 1, 4, 1, 5]))   # 3</code></pre>
+    </div>
+
+    <div class="chapter-footer">
+      <button class="nav-btn" onclick="showChapter(9)">← Dictionaries</button>
+      <button class="nav-btn" onclick="showChapter(11)">Next: Math Problems →</button>
+    </div>
+  </div>
+
+  <!-- ====== CHAPTER 11: MATH PROBLEMS ====== -->
+  <div class="chapter" id="ch-11">
+    <div class="chapter-title">Ch 11: <span>Classic</span> Math Problems</div>
+    <div class="chapter-subtitle">The problems every beginner should know by heart. Likely to appear on your test.</div>
+    <div class="time-est">⏱ Estimated time: 50 minutes</div>
+
+    <div class="code-block">
+      <div class="code-label"><span class="lang">python3 — Classic Problems</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code class="language-python"># ===== FIBONACCI SEQUENCE =====
+# 0, 1, 1, 2, 3, 5, 8, 13, 21, ...
+# Each number = sum of previous two
+
+def fibonacci(n):
+    if n <= 0: return 0
+    if n == 1: return 1
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+    return b
+
+print(fibonacci(7))   # 13
+
+# ===== FACTORIAL =====
+# n! = n * (n-1) * (n-2) * ... * 1
+# 5! = 5 * 4 * 3 * 2 * 1 = 120
+
+def factorial(n):
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+
+print(factorial(5))   # 120
+
+# ===== IS PRIME? =====
+# A prime has no divisors other than 1 and itself
+
+def is_prime(n):
+    if n < 2: return False
+    for i in range(2, int(n**0.5) + 1):  # only check up to sqrt(n)!
+        if n % i == 0:
+            return False
+    return True
+
+print(is_prime(7))    # True
+print(is_prime(12))   # False
+
+# ===== SUM OF DIGITS =====
+def digit_sum(n):
+    total = 0
+    while n > 0:
+        total += n % 10    # get last digit
+        n //= 10            # remove last digit
+    return total
+
+print(digit_sum(12345))   # 15
+
+# ===== GCD (Greatest Common Divisor) =====
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+print(gcd(48, 18))   # 6
+
+# ===== FIZZBUZZ (1 to N) =====
+n = int(input())
+for i in range(1, n + 1):
+    if i % 3 == 0 and i % 5 == 0:
+        print("FizzBuzz")
+    elif i % 3 == 0:
+        print("Fizz")
+    elif i % 5 == 0:
+        print("Buzz")
+    else:
+        print(i)</code></pre>
+    </div>
+
+    <div class="section-h2">Practice Problems <span class="tag tag-py">PYTHON</span></div>
+
+    <div class="problem-card" onclick="toggleProblem(this)">
+      <div class="problem-header">
+        <span class="diff-badge diff-easy">Easy</span>
+        <span class="problem-title">Sum 1 to N</span>
+        <span class="problem-toggle">▶</span>
+      </div>
+      <div class="problem-body">
+        <p><strong>Problem:</strong> Given an integer N, print the sum of all integers from 1 to N.</p>
+        <div class="example-box"><div class="ex-label">Input</div><div class="ex-val">5</div></div>
+        <div class="example-box"><div class="ex-label">Output</div><div class="ex-val">15</div></div>
+        <button class="solution-toggle" onclick="toggleSolution(this); event.stopPropagation()">Show Solution</button>
+        <div class="solution-block">
+          <div class="code-block"><div class="code-label"><span class="lang">python3</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><code class="language-python">n = int(input())
+print(n * (n + 1) // 2)  # Math formula: O(1)
+# OR: print(sum(range(1, n+1)))  # Loop: O(n)</code></pre></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-card" onclick="toggleProblem(this)">
+      <div class="problem-header">
+        <span class="diff-badge diff-easy">Easy</span>
+        <span class="problem-title">Count Divisors</span>
+        <span class="problem-toggle">▶</span>
+      </div>
+      <div class="problem-body">
+        <p><strong>Problem:</strong> Given N, count how many integers from 1 to N are divisible by 3 OR 5.</p>
+        <div class="example-box"><div class="ex-label">Input</div><div class="ex-val">15</div></div>
+        <div class="example-box"><div class="ex-label">Output</div><div class="ex-val">7</div></div>
+        <button class="solution-toggle" onclick="toggleSolution(this); event.stopPropagation()">Show Solution</button>
+        <div class="solution-block">
+          <div class="code-block"><div class="code-label"><span class="lang">python3</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><code class="language-python">n = int(input())
+count = 0
+for i in range(1, n + 1):
+    if i % 3 == 0 or i % 5 == 0:
+        count += 1
+print(count)</code></pre></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-footer">
+      <button class="nav-btn" onclick="showChapter(10)">← Patterns</button>
+      <button class="nav-btn" onclick="showChapter(12)">Next: String Problems →</button>
+    </div>
+  </div>
+
+  <!-- ====== CHAPTER 12: STRING PROBLEMS ====== -->
+  <div class="chapter" id="ch-12">
+    <div class="chapter-title">Ch 12: <span>String</span> Problems</div>
+    <div class="chapter-subtitle">Hands-on practice with common string manipulation challenges.</div>
+    <div class="time-est">⏱ Estimated time: 45 minutes</div>
+
+    <div class="problem-card" onclick="toggleProblem(this)">
+      <div class="problem-header">
+        <span class="diff-badge diff-easy">Easy</span>
+        <span class="problem-title">Reverse a String</span>
+        <span class="problem-toggle">▶</span>
+      </div>
+      <div class="problem-body">
+        <p>Given a string, print it reversed.</p>
+        <div class="example-box"><div class="ex-label">Input</div><div class="ex-val">Hello</div></div>
+        <div class="example-box"><div class="ex-label">Output</div><div class="ex-val">olleH</div></div>
+        <button class="solution-toggle" onclick="toggleSolution(this); event.stopPropagation()">Show Solution</button>
+        <div class="solution-block"><div class="code-block"><div class="code-label"><span class="lang">python3</span></div>
+        <pre><code class="language-python">s = input()
+print(s[::-1])</code></pre></div></div>
+      </div>
+    </div>
+
+    <div class="problem-card" onclick="toggleProblem(this)">
+      <div class="problem-header">
+        <span class="diff-badge diff-easy">Easy</span>
+        <span class="problem-title">Palindrome Check</span>
+        <span class="problem-toggle">▶</span>
+      </div>
+      <div class="problem-body">
+        <p>Given a string, print "YES" if it's a palindrome, "NO" otherwise.</p>
+        <div class="example-box"><div class="ex-label">Input</div><div class="ex-val">racecar</div></div>
+        <div class="example-box"><div class="ex-label">Output</div><div class="ex-val">YES</div></div>
+        <button class="solution-toggle" onclick="toggleSolution(this); event.stopPropagation()">Show Solution</button>
+        <div class="solution-block"><div class="code-block"><div class="code-label"><span class="lang">python3</span></div>
+        <pre><code class="language-python">s = input()
+if s == s[::-1]:
+    print("YES")
+else:
+    print("NO")</code></pre></div></div>
+      </div>
+    </div>
+
+    <div class="problem-card" onclick="toggleProblem(this)">
+      <div class="problem-header">
+        <span class="diff-badge diff-med">Medium</span>
+        <span class="problem-title">Count Vowels</span>
+        <span class="problem-toggle">▶</span>
+      </div>
+      <div class="problem-body">
+        <p>Given a string, count and print the number of vowels (a, e, i, o, u — case insensitive).</p>
+        <div class="example-box"><div class="ex-label">Input</div><div class="ex-val">Hello World</div></div>
+        <div class="example-box"><div class="ex-label">Output</div><div class="ex-val">3</div></div>
+        <button class="solution-toggle" onclick="toggleSolution(this); event.stopPropagation()">Show Solution</button>
+        <div class="solution-block"><div class="code-block"><div class="code-label"><span class="lang">python3</span></div>
+        <pre><code class="language-python">s = input().lower()
+vowels = "aeiou"
+count = 0
+for char in s:
+    if char in vowels:
+        count += 1
+print(count)
+# One-liner: print(sum(1 for c in s.lower() if c in "aeiou"))</code></pre></div></div>
+      </div>
+    </div>
+
+    <div class="problem-card" onclick="toggleProblem(this)">
+      <div class="problem-header">
+        <span class="diff-badge diff-med">Medium</span>
+        <span class="problem-title">Caesar Cipher</span>
+        <span class="problem-toggle">▶</span>
+      </div>
+      <div class="problem-body">
+        <p>Shift each letter in a string by K positions forward in the alphabet. Wrap around from Z to A. Non-letters stay unchanged.</p>
+        <div class="example-box"><div class="ex-label">Input</div><div class="ex-val">Hello 2<br>(string then shift)</div></div>
+        <div class="example-box"><div class="ex-label">Output</div><div class="ex-val">Jgnnq</div></div>
+        <button class="solution-toggle" onclick="toggleSolution(this); event.stopPropagation()">Show Solution</button>
+        <div class="solution-block"><div class="code-block"><div class="code-label"><span class="lang">python3</span></div>
+        <pre><code class="language-python">s = input()
+k = int(input())
+result = ""
+for char in s:
+    if char.isalpha():
+        base = ord('A') if char.isupper() else ord('a')
+        result += chr((ord(char) - base + k) % 26 + base)
+    else:
+        result += char
+print(result)
+# ord() converts char to ASCII number
+# chr() converts ASCII number back to char
+# % 26 wraps around the alphabet</code></pre></div></div>
+      </div>
+    </div>
+
+    <div class="chapter-footer">
+      <button class="nav-btn" onclick="showChapter(11)">← Math Problems</button>
+      <button class="nav-btn" onclick="showChapter(13)">Next: Array Problems →</button>
+    </div>
+  </div>
+
+  <!-- ====== CHAPTER 13: ARRAY PROBLEMS ====== -->
+  <div class="chapter" id="ch-13">
+    <div class="chapter-title">Ch 13: <span>Array</span> Problems</div>
+    <div class="chapter-subtitle">The most common problem type. Master these patterns and you'll handle most tests.</div>
+    <div class="time-est">⏱ Estimated time: 45 minutes</div>
+
+    <div class="problem-card" onclick="toggleProblem(this)">
+      <div class="problem-header">
+        <span class="diff-badge diff-easy">Easy</span>
+        <span class="problem-title">Find Min, Max, and Average</span>
+        <span class="problem-toggle">▶</span>
+      </div>
+      <div class="problem-body">
+        <p>Given N integers, print the minimum, maximum, and average (formatted to 2 decimal places).</p>
+        <div class="example-box"><div class="ex-label">Input</div><div class="ex-val">5<br>3 8 1 6 4</div></div>
+        <div class="example-box"><div class="ex-label">Output</div><div class="ex-val">1 8 4.40</div></div>
+        <button class="solution-toggle" onclick="toggleSolution(this); event.stopPropagation()">Show Solution</button>
+        <div class="solution-block"><div class="code-block"><div class="code-label"><span class="lang">python3</span></div>
+        <pre><code class="language-python">n = int(input())
+nums = list(map(int, input().split()))
+print(min(nums), max(nums), f"{sum(nums)/n:.2f}")</code></pre></div></div>
+      </div>
+    </div>
+
+    <div class="problem-card" onclick="toggleProblem(this)">
+      <div class="problem-header">
+        <span class="diff-badge diff-easy">Easy</span>
+        <span class="problem-title">Remove Duplicates</span>
+        <span class="problem-toggle">▶</span>
+      </div>
+      <div class="problem-body">
+        <p>Given a list of numbers, print the unique numbers in sorted order.</p>
+        <div class="example-box"><div class="ex-label">Input</div><div class="ex-val">4 3 1 4 2 3 1</div></div>
+        <div class="example-box"><div class="ex-label">Output</div><div class="ex-val">1 2 3 4</div></div>
+        <button class="solution-toggle" onclick="toggleSolution(this); event.stopPropagation()">Show Solution</button>
+        <div class="solution-block"><div class="code-block"><div class="code-label"><span class="lang">python3</span></div>
+        <pre><code class="language-python">nums = list(map(int, input().split()))
+unique = sorted(set(nums))   # set removes duplicates, sorted orders them
+print(*unique)               # *unique unpacks the list with spaces</code></pre></div></div>
+      </div>
+    </div>
+
+    <div class="problem-card" onclick="toggleProblem(this)">
+      <div class="problem-header">
+        <span class="diff-badge diff-med">Medium</span>
+        <span class="problem-title">Rotate Array Left by K</span>
+        <span class="problem-toggle">▶</span>
+      </div>
+      <div class="problem-body">
+        <p>Rotate an array to the left by K positions. Elements that fall off the left come back on the right.</p>
+        <div class="example-box"><div class="ex-label">Input</div><div class="ex-val">1 2 3 4 5<br>K=2</div></div>
+        <div class="example-box"><div class="ex-label">Output</div><div class="ex-val">3 4 5 1 2</div></div>
+        <button class="solution-toggle" onclick="toggleSolution(this); event.stopPropagation()">Show Solution</button>
+        <div class="solution-block"><div class="code-block"><div class="code-label"><span class="lang">python3</span></div>
+        <pre><code class="language-python">nums = list(map(int, input().split()))
+k = int(input())
+k = k % len(nums)   # handle k > len
+rotated = nums[k:] + nums[:k]
+print(*rotated)</code></pre></div></div>
+      </div>
+    </div>
+
+    <div class="problem-card" onclick="toggleProblem(this)">
+      <div class="problem-header">
+        <span class="diff-badge diff-med">Medium</span>
+        <span class="problem-title">Two Sum — Find Pair</span>
+        <span class="problem-toggle">▶</span>
+      </div>
+      <div class="problem-body">
+        <p>Given an array and a target T, print "YES" if any two numbers sum to T, else "NO".</p>
+        <div class="example-box"><div class="ex-label">Input</div><div class="ex-val">2 7 11 15<br>T=9</div></div>
+        <div class="example-box"><div class="ex-label">Output</div><div class="ex-val">YES</div></div>
+        <button class="solution-toggle" onclick="toggleSolution(this); event.stopPropagation()">Show Solution</button>
+        <div class="solution-block"><div class="code-block"><div class="code-label"><span class="lang">python3</span></div>
+        <pre><code class="language-python">nums = list(map(int, input().split()))
+target = int(input())
+seen = set()
+found = False
+for n in nums:
+    complement = target - n
+    if complement in seen:
+        found = True
+        break
+    seen.add(n)
+print("YES" if found else "NO")</code></pre></div></div>
+      </div>
+    </div>
+
+    <div class="chapter-footer">
+      <button class="nav-btn" onclick="showChapter(12)">← String Problems</button>
+      <button class="nav-btn" onclick="showChapter(14)">Next: Mock Test →</button>
+    </div>
+  </div>
+
+  <!-- ====== CHAPTER 14: MOCK TEST ====== -->
+  <div class="chapter" id="ch-14">
+    <div class="chapter-title">Ch 14: <span>Mock</span> Practice Test</div>
+    <div class="chapter-subtitle">Simulate the real IBM HackerRank experience. 2 problems. 75 minutes. Go.</div>
+    <div class="time-est">⏱ Suggested time: 75 minutes (set a separate timer!)</div>
+
+    <div class="callout danger">
+      <span class="callout-icon">⏱️</span>
+      <div class="callout-body">
+        <strong>How to Use This Mock Test</strong>
+        Open a separate text editor (Notepad, VS Code, or repl.it). Start a 75-minute timer. Read BOTH problems first. Attempt them on your own before looking at solutions. This simulates the real test environment.
+      </div>
+    </div>
+
+    <div class="problem-card" onclick="toggleProblem(this)">
+      <div class="problem-header">
+        <span class="diff-badge diff-easy">Problem 1 — Easy/Med</span>
+        <span class="problem-title">Grade Classifier with Statistics</span>
+        <span class="problem-toggle">▶</span>
+      </div>
+      <div class="problem-body">
+        <p><strong>Problem:</strong> A teacher has N students. For each student, you're given their name and score (0-100). Print each student's name and letter grade (A≥90, B≥80, C≥70, D≥60, F<60). Then print the class average formatted to 2 decimal places, and the number of students who passed (score ≥ 60).</p>
+        <div class="example-box"><div class="ex-label">Input</div><div class="ex-val">4<br>Alice 92<br>Bob 78<br>Charlie 65<br>Diana 55</div></div>
+        <div class="example-box"><div class="ex-label">Output</div><div class="ex-val">Alice: A<br>Bob: C<br>Charlie: D<br>Diana: F<br>Average: 72.50<br>Passed: 3</div></div>
+        <button class="solution-toggle" onclick="toggleSolution(this); event.stopPropagation()">Show Full Solution</button>
+        <div class="solution-block"><div class="code-block"><div class="code-label"><span class="lang">python3</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code class="language-python">n = int(input())
+scores = []
+passed = 0
+
+for _ in range(n):
+    parts = input().split()
+    name = parts[0]
+    score = int(parts[1])
+    scores.append(score)
+    
+    if score >= 90:
+        grade = "A"
+    elif score >= 80:
+        grade = "B"
+    elif score >= 70:
+        grade = "C"
+    elif score >= 60:
+        grade = "D"
+    else:
+        grade = "F"
+    
+    if score >= 60:
+        passed += 1
+    
+    print(f"{name}: {grade}")
+
+average = sum(scores) / n
+print(f"Average: {average:.2f}")
+print(f"Passed: {passed}")</code></pre></div>
+        <div class="callout tip"><span class="callout-icon">💡</span><div class="callout-body"><strong>Key Techniques Used</strong> Input parsing with split(), if/elif/else for grading, accumulator for passed count, f-string formatting with :.2f for 2 decimal places.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-card" onclick="toggleProblem(this)">
+      <div class="problem-header">
+        <span class="diff-badge diff-med">Problem 2 — Medium</span>
+        <span class="problem-title">Word Frequency Counter</span>
+        <span class="problem-toggle">▶</span>
+      </div>
+      <div class="problem-body">
+        <p><strong>Problem:</strong> Given a sentence, count the frequency of each word (case-insensitive). Print each unique word and its count in alphabetical order.</p>
+        <div class="example-box"><div class="ex-label">Input</div><div class="ex-val">the cat sat on the mat the cat</div></div>
+        <div class="example-box"><div class="ex-label">Output</div><div class="ex-val">cat 2<br>mat 1<br>on 1<br>sat 1<br>the 3</div></div>
+        <button class="solution-toggle" onclick="toggleSolution(this); event.stopPropagation()">Show Full Solution</button>
+        <div class="solution-block"><div class="code-block"><div class="code-label"><span class="lang">python3</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><code class="language-python">sentence = input().lower()
+words = sentence.split()
+
+freq = {}
+for word in words:
+    freq[word] = freq.get(word, 0) + 1
+
+for word in sorted(freq.keys()):
+    print(word, freq[word])</code></pre></div>
+        <div class="callout tip"><span class="callout-icon">💡</span><div class="callout-body"><strong>Key Techniques Used</strong> .lower() for case normalization, .split() to get words, dictionary frequency map with .get(key, 0), sorted() to iterate in alphabetical order.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-h2">💡 Before You Submit — Checklist</div>
+    <div class="concept-card">
+      <h3>✅ Test Submission Checklist</h3>
+      <ul>
+        <li>Did you read the input exactly as specified? (same number of lines, same format)</li>
+        <li>Did you print the output exactly as specified? (spaces, newlines, capitalization)</li>
+        <li>Did you test with the sample input given in the problem?</li>
+        <li>Did you handle edge cases? (N=0, empty string, single element)</li>
+        <li>Are there any syntax errors? (missing colons, wrong indentation)</li>
+        <li>Did you convert input to the right type? (int(), float())</li>
+      </ul>
+    </div>
+
+    <div class="chapter-footer">
+      <button class="nav-btn" onclick="showChapter(13)">← Array Problems</button>
+      <button class="nav-btn" onclick="showChapter(15)">Next: Cheat Sheet →</button>
+    </div>
+  </div>
+
+  <!-- ====== CHAPTER 15: CHEAT SHEET ====== -->
+  <div class="chapter" id="ch-15">
+    <div class="chapter-title">⚡ <span>Cheat Sheet</span> — Quick Reference</div>
+    <div class="chapter-subtitle">Everything you need in one place. Review this before your test.</div>
+    <div class="time-est">⏱ Review time: 20 minutes</div>
+
+    <div class="cheat-grid">
+      <div class="cheat-card">
+        <h4>📥 Input Patterns</h4>
+        <div class="cheat-row"><div class="cr-left">Single integer</div><div class="cr-right">n = int(input())</div></div>
+        <div class="cheat-row"><div class="cr-left">Single string</div><div class="cr-right">s = input()</div></div>
+        <div class="cheat-row"><div class="cr-left">Two ints same line</div><div class="cr-right">a,b = map(int, input().split())</div></div>
+        <div class="cheat-row"><div class="cr-left">List of ints</div><div class="cr-right">list(map(int, input().split()))</div></div>
+        <div class="cheat-row"><div class="cr-left">N lines of input</div><div class="cr-right">for _ in range(n): x=int(input())</div></div>
+        <div class="cheat-row"><div class="cr-left">Float input</div><div class="cr-right">x = float(input())</div></div>
+      </div>
+      <div class="cheat-card">
+        <h4>📤 Output Patterns</h4>
+        <div class="cheat-row"><div class="cr-left">Basic print</div><div class="cr-right">print(value)</div></div>
+        <div class="cheat-row"><div class="cr-left">Formatted string</div><div class="cr-right">print(f"val: {x}")</div></div>
+        <div class="cheat-row"><div class="cr-left">2 decimal places</div><div class="cr-right">print(f"{x:.2f}")</div></div>
+        <div class="cheat-row"><div class="cr-left">Print list spaced</div><div class="cr-right">print(*my_list)</div></div>
+        <div class="cheat-row"><div class="cr-left">Print no newline</div><div class="cr-right">print(x, end="")</div></div>
+        <div class="cheat-row"><div class="cr-left">Custom separator</div><div class="cr-right">print(a, b, sep=",")</div></div>
+      </div>
+      <div class="cheat-card">
+        <h4>📋 List Operations</h4>
+        <div class="cheat-row"><div class="cr-left">Create</div><div class="cr-right">lst = [1, 2, 3]</div></div>
+        <div class="cheat-row"><div class="cr-left">Add to end</div><div class="cr-right">lst.append(4)</div></div>
+        <div class="cheat-row"><div class="cr-left">Remove last</div><div class="cr-right">lst.pop()</div></div>
+        <div class="cheat-row"><div class="cr-left">Sort in place</div><div class="cr-right">lst.sort()</div></div>
+        <div class="cheat-row"><div class="cr-left">Sorted copy</div><div class="cr-right">sorted(lst)</div></div>
+        <div class="cheat-row"><div class="cr-left">Reverse</div><div class="cr-right">lst[::-1]</div></div>
+        <div class="cheat-row"><div class="cr-left">Length</div><div class="cr-right">len(lst)</div></div>
+        <div class="cheat-row"><div class="cr-left">Membership</div><div class="cr-right">x in lst</div></div>
+        <div class="cheat-row"><div class="cr-left">Unique values</div><div class="cr-right">list(set(lst))</div></div>
+      </div>
+      <div class="cheat-card">
+        <h4>🔤 String Operations</h4>
+        <div class="cheat-row"><div class="cr-left">Length</div><div class="cr-right">len(s)</div></div>
+        <div class="cheat-row"><div class="cr-left">Uppercase</div><div class="cr-right">s.upper()</div></div>
+        <div class="cheat-row"><div class="cr-left">Lowercase</div><div class="cr-right">s.lower()</div></div>
+        <div class="cheat-row"><div class="cr-left">Reverse</div><div class="cr-right">s[::-1]</div></div>
+        <div class="cheat-row"><div class="cr-left">Split to list</div><div class="cr-right">s.split()</div></div>
+        <div class="cheat-row"><div class="cr-left">Join list</div><div class="cr-right">" ".join(lst)</div></div>
+        <div class="cheat-row"><div class="cr-left">Replace</div><div class="cr-right">s.replace("a","b")</div></div>
+        <div class="cheat-row"><div class="cr-left">Contains</div><div class="cr-right">"sub" in s</div></div>
+        <div class="cheat-row"><div class="cr-left">Strip whitespace</div><div class="cr-right">s.strip()</div></div>
+      </div>
+      <div class="cheat-card">
+        <h4>🔢 Math / Number</h4>
+        <div class="cheat-row"><div class="cr-left">Modulo (remainder)</div><div class="cr-right">n % m</div></div>
+        <div class="cheat-row"><div class="cr-left">Integer division</div><div class="cr-right">n // m</div></div>
+        <div class="cheat-row"><div class="cr-left">Power</div><div class="cr-right">n ** p</div></div>
+        <div class="cheat-row"><div class="cr-left">Absolute value</div><div class="cr-right">abs(n)</div></div>
+        <div class="cheat-row"><div class="cr-left">Square root</div><div class="cr-right">n ** 0.5</div></div>
+        <div class="cheat-row"><div class="cr-left">Is even</div><div class="cr-right">n % 2 == 0</div></div>
+        <div class="cheat-row"><div class="cr-left">Max of two</div><div class="cr-right">max(a, b)</div></div>
+        <div class="cheat-row"><div class="cr-left">Round</div><div class="cr-right">round(3.567, 2)</div></div>
+      </div>
+      <div class="cheat-card">
+        <h4>📖 Dictionary</h4>
+        <div class="cheat-row"><div class="cr-left">Create</div><div class="cr-right">d = {"key": "val"}</div></div>
+        <div class="cheat-row"><div class="cr-left">Access</div><div class="cr-right">d["key"]</div></div>
+        <div class="cheat-row"><div class="cr-left">Safe access</div><div class="cr-right">d.get("key", 0)</div></div>
+        <div class="cheat-row"><div class="cr-left">Add/Update</div><div class="cr-right">d["new"] = 5</div></div>
+        <div class="cheat-row"><div class="cr-left">Delete</div><div class="cr-right">del d["key"]</div></div>
+        <div class="cheat-row"><div class="cr-left">Check key</div><div class="cr-right">"key" in d</div></div>
+        <div class="cheat-row"><div class="cr-left">All pairs</div><div class="cr-right">d.items()</div></div>
+        <div class="cheat-row"><div class="cr-left">Frequency count</div><div class="cr-right">d[x] = d.get(x,0)+1</div></div>
+      </div>
+    </div>
+
+    <div class="section-h2">🚨 Common Errors & Fixes</div>
+    <div class="concept-card">
+      <h3>⚠️ Errors You'll Encounter</h3>
+      <table class="compare-table">
+        <tr><th>Error</th><th>Cause</th><th>Fix</th></tr>
+        <tr><td>IndentationError</td><td>Wrong spacing inside if/for/def</td><td>Use exactly 4 spaces consistently</td></tr>
+        <tr><td>TypeError: int + str</td><td>Mixing types in operation</td><td>Convert: int(s) or str(n)</td></tr>
+        <tr><td>IndexError: list index out of range</td><td>Accessing index that doesn't exist</td><td>Check len(), use i < len(lst)</td></tr>
+        <tr><td>KeyError</td><td>Accessing dict key that doesn't exist</td><td>Use d.get(key, default)</td></tr>
+        <tr><td>NameError: name not defined</td><td>Variable used before being created</td><td>Define variable before using it</td></tr>
+        <tr><td>ZeroDivisionError</td><td>Dividing by zero</td><td>Check if divisor != 0 before dividing</td></tr>
+        <tr><td>ValueError: invalid literal for int()</td><td>Passing non-numeric string to int()</td><td>Ensure input is actually a number</td></tr>
+      </table>
+    </div>
+
+    <div class="section-h2">🧠 Mental Models to Remember</div>
+    <div class="concept-card">
+      <h3>💭 Think Like This During the Test</h3>
+      <ul>
+        <li><strong>Step 1:</strong> Read the problem twice. Identify: what's the input? what's the output?</li>
+        <li><strong>Step 2:</strong> Write pseudocode — plain English steps — before any real code</li>
+        <li><strong>Step 3:</strong> Code the I/O first (input reading + print statement) to confirm format</li>
+        <li><strong>Step 4:</strong> Add logic step by step. Test with the sample input.</li>
+        <li><strong>Step 5:</strong> Submit even if it's not perfect — partial credit is real.</li>
+        <li><strong>Remember:</strong> loops + conditions + data structures solve 90% of all problems</li>
+      </ul>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">🌟</span>
+      <div class="callout-body">
+        <strong>Sources & Further Reading</strong>
+        This guide is grounded in: Python 3 Official Docs (docs.python.org), HackerRank Practice Problems (hackerrank.com/domains/python), IBM Intern Coding Round reports on Reddit (r/cscareerquestions), and standard competitive programming pedagogy (Introduction to Algorithms — CLRS, Cracking the Coding Interview). For additional practice: repl.it, programiz.com/python-programming, w3schools.com/python.
+      </div>
+    </div>
+
+    <div class="chapter-footer">
+      <button class="nav-btn" onclick="showChapter(14)">← Mock Test</button>
+      <button class="nav-btn" onclick="showChapter(0)">↺ Back to Start</button>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+// ======= CHAPTER NAVIGATION =======
+const chapters = [
+  "Welcome & Schedule", "Variables & Data Types", "Input & Output",
+  "Operators", "Control Flow", "Loops", "Functions",
+  "Lists & Arrays", "Strings", "Dictionaries", "Patterns",
+  "Math Problems", "String Problems", "Array Problems",
+  "Mock Test", "Cheat Sheet"
+];
+const badges = [
+  "INTRO","CH 01","CH 02","CH 03","CH 04","CH 05","CH 06","CH 07",
+  "CH 08","CH 09","CH 10","CH 11","CH 12","CH 13","CH 14","REF"
+];
+let currentChapter = 0;
+const done = new Set();
+
+function showChapter(idx) {
+  document.querySelectorAll('.chapter').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('ch-' + idx).classList.add('active');
+  document.querySelectorAll('.nav-item')[idx].classList.add('active');
+  document.getElementById('topbar-title').textContent = chapters[idx];
+  document.getElementById('topbar-badge').textContent = badges[idx];
+  currentChapter = idx;
+  document.getElementById('main').scrollTo(0, 0);
+  hljs.highlightAll();
+}
+
+function markDone() {
+  done.add(currentChapter);
+  document.getElementById('chk-' + currentChapter).textContent = '✓';
+  document.querySelectorAll('.nav-item')[currentChapter].classList.add('done');
+  const btn = document.getElementById('done-btn');
+  btn.textContent = '✓ Done!';
+  btn.classList.add('done');
+  updateProgress();
+  setTimeout(() => { btn.textContent = '✓ Mark Done'; btn.classList.remove('done'); }, 2000);
+}
+
+function updateProgress() {
+  const pct = Math.round((done.size / 16) * 100);
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+}
+
+// ======= TIMER =======
+let timerInterval = null;
+let timerSeconds = 0;
+let timerRunning = false;
+
+function timerStart() {
+  if (timerRunning) return;
+  timerRunning = true;
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    const h = String(Math.floor(timerSeconds / 3600)).padStart(2,'0');
+    const m = String(Math.floor((timerSeconds % 3600) / 60)).padStart(2,'0');
+    const s = String(timerSeconds % 60).padStart(2,'0');
+    document.getElementById('timer-display').textContent = `${h}:${m}:${s}`;
+  }, 1000);
+}
+function timerPause() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+}
+function timerReset() {
+  timerPause();
+  timerSeconds = 0;
+  document.getElementById('timer-display').textContent = '00:00:00';
+}
+
+// ======= QUIZ =======
+const quizAnswers = {
+  'q1-1': 'B', 'q1-2': 'B', 'q1-3': 'C', 'q1-4': 'C',
+  'q2-1': 'B', 'q2-2': 'C', 'q2-3': 'B',
+  'q3-1': 'B', 'q3-2': 'A', 'q3-3': 'B', 'q3-4': 'B',
+  'q4-1': 'C', 'q4-2': 'B', 'q4-3': 'B',
+  'q5-1': 'B', 'q5-2': 'C', 'q5-3': 'B', 'q5-4': 'C',
+  'q6-1': 'B', 'q6-2': 'B', 'q6-3': 'C',
+  'q7-1': 'C', 'q7-2': 'C', 'q7-3': 'B',
+  'q8-1': 'B', 'q8-2': 'C', 'q8-3': 'B',
+  'q9-1': 'B', 'q9-2': 'B'
+};
+const quizExplanations = {
+  'q1-1': '3.7 is a decimal number, so it is a float.',
+  'q1-2': 'int() converts a string to an integer. int("5") = 5.',
+  'q1-3': 'Python booleans are True and False with capital first letters.',
+  'q1-4': 'Python variables need no type declaration. Just name = value.',
+  'q2-1': 'input() always returns a string, even if the user types a number.',
+  'q2-2': 'map(int, ...) applies int() to each element from split().',
+  'q2-3': 'f-strings evaluate expressions inside {}. 5 * 3 = 15.',
+  'q3-1': '17 divided by 5 is 3 remainder 2. So 17 % 5 = 2.',
+  'q3-2': 'n % 2 gives the remainder when dividing by 2. If 0, it\'s even.',
+  'q3-3': 'AND requires BOTH to be True. True AND False = False.',
+  'q3-4': '// is integer/floor division. 10 // 3 = 3 (drops the decimal).',
+  'q4-1': '15 % 3 == 0 AND 15 % 5 == 0, so "FizzBuzz" is printed.',
+  'q4-2': 'Python uses indentation (4 spaces) to define code blocks.',
+  'q4-3': 'x=7 > 5, so the condition is True, printing "big".',
+  'q5-1': 'range(3,8) goes from 3 up to but NOT including 8: 3,4,5,6,7.',
+  'q5-2': 'break immediately exits the loop.',
+  'q5-3': 'Multiplying a string repeats it. "*" * 4 = "****".',
+  'q5-4': 'range(0,10,3) gives: 0, 3, 6, 9 — that\'s 4 values.',
+  'q6-1': 'The function adds a+b = 4+6 = 10 and returns it.',
+  'q6-2': 'abs() returns the absolute (non-negative) value. abs(-17) = 17.',
+  'q6-3': 'Python uses the def keyword to define functions.',
+  'q7-1': 'Negative indices count from the end. -1 is the last element, 40.',
+  'q7-2': '.append() adds an element to the end of the list.',
+  'q7-3': 'range(4) = 0,1,2,3. Squared: 0,1,4,9. Result: [0, 1, 4, 9].',
+  'q8-1': '[::-1] slices with step -1, reversing the string.',
+  'q8-2': '.lower() converts all characters to lowercase.',
+  'q8-3': '.split(",") splits on comma, giving a list: [\'a\',\'b\',\'c\'].',
+  'q9-1': 'd["y"] accesses value at key "y", which is 10.',
+  'q9-2': 'Dictionaries map each element to its count — perfect for frequency.'
+};
+const quizScores = {};
+
+function answer(el, qId, selected) {
+  const opts = el.parentElement.querySelectorAll('.quiz-opt');
+  opts.forEach(o => o.classList.add('disabled'));
+  const correct = quizAnswers[qId];
+  const isCorrect = selected === correct;
+  if (isCorrect) {
+    el.classList.add('correct');
+  } else {
+    el.classList.add('wrong');
+    // highlight correct
+    const letters = ['A','B','C','D'];
+    opts.forEach((o, i) => { if (letters[i] === correct) o.classList.add('correct'); });
+  }
+  const fb = document.getElementById('fb-' + qId);
+  fb.textContent = (isCorrect ? '✓ Correct! ' : '✗ Incorrect. ') + quizExplanations[qId];
+  fb.className = 'quiz-feedback show ' + (isCorrect ? 'ok' : 'bad');
+
+  // Check if all questions in this quiz answered
+  const chNum = qId.split('-')[0].replace('q','');
+  checkQuizComplete(chNum);
+}
+
+function checkQuizComplete(chNum) {
+  const quizEl = document.getElementById('quiz-' + chNum);
+  const allQs = quizEl.querySelectorAll('.quiz-q');
+  const answered = quizEl.querySelectorAll('.quiz-opt.correct, .quiz-opt.wrong');
+  // Count unique questions answered
+  const answeredQs = new Set();
+  quizEl.querySelectorAll('.quiz-feedback.show').forEach(fb => answeredQs.add(fb.id));
+  if (answeredQs.size === allQs.length) {
+    const corrects = quizEl.querySelectorAll('.quiz-opt.correct').length;
+    const total = allQs.length;
+    const scoreEl = document.getElementById('score-' + chNum);
+    const pct = Math.round(corrects / total * 100);
+    scoreEl.textContent = `Quiz Score: ${corrects}/${total} (${pct}%)`;
+    scoreEl.style.display = 'block';
+    scoreEl.style.color = pct >= 75 ? 'var(--green)' : pct >= 50 ? 'var(--yellow)' : 'var(--red)';
+    document.getElementById('reset-' + chNum).classList.add('visible');
+  }
+}
+
+function resetQuiz(chNum, numQ) {
+  for (let i = 1; i <= numQ; i++) {
+    const qId = `q${chNum}-${i}`;
+    const qEl = document.getElementById(qId);
+    if (!qEl) continue;
+    qEl.querySelectorAll('.quiz-opt').forEach(o => {
+      o.classList.remove('correct','wrong','disabled');
+    });
+    const fb = document.getElementById('fb-' + qId);
+    if (fb) { fb.className = 'quiz-feedback'; fb.textContent = ''; }
+  }
+  document.getElementById('score-' + chNum).style.display = 'none';
+  document.getElementById('reset-' + chNum).classList.remove('visible');
+}
+
+// ======= PROBLEM CARDS =======
+function toggleProblem(card) {
+  card.classList.toggle('open');
+}
+function toggleSolution(btn) {
+  const block = btn.nextElementSibling;
+  block.classList.toggle('show');
+  btn.textContent = block.classList.contains('show') ? 'Hide Solution' : 'Show Solution';
+}
+
+// ======= COPY CODE =======
+function copyCode(btn) {
+  const code = btn.closest('.code-block').querySelector('code').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ======= INIT =======
+document.addEventListener('DOMContentLoaded', () => {
+  hljs.highlightAll();
+});
+</script>
+</body>
+</html>
