@@ -556,16 +556,7 @@
       : getActiveTopicLabel();
 
     if (globalStatus) {
-      globalStatus.innerHTML = `
-        <div class="status-chip">
-          <span class="chip-label">Current focus</span>
-          <strong>${escapeHtml(currentFocus)}</strong>
-        </div>
-        <div class="status-chip">
-          <span class="chip-label">Local time</span>
-          <strong id="global-real-clock">${escapeHtml(formatWallClock(new Date()))}</strong>
-        </div>
-      `;
+      globalStatus.innerHTML = "";
     }
 
     authTrigger.textContent = state.currentUser ? "Account" : "Sign In";
@@ -573,14 +564,13 @@
       ? `
           <div class="user-pill-copy">
             <strong>${escapeHtml(state.currentUser.displayName)}</strong>
-            <span>${escapeHtml(state.currentUser.authType === "supabase" ? "Supabase sync on" : "Local browser profile")}</span>
+            <span>${escapeHtml(state.currentUser.authType === "supabase" ? "Cloud sync" : "Local profile")}</span>
           </div>
-          <button class="text-button" type="button" data-action="logout-inline">Sign out</button>
         `
       : `
           <div class="user-pill-copy">
-            <strong>Guest mode</strong>
-            <span>${escapeHtml(state.supabase.available ? "Open for everyone · cloud sync optional" : "Open for everyone · local saves active")}</span>
+            <strong>Guest</strong>
+            <span>${escapeHtml(state.supabase.available ? "Cloud optional" : "Local saves")}</span>
           </div>
         `;
 
@@ -1452,7 +1442,7 @@
     return {
       activeLanguage: "javascript",
       splitMode: !isIdePage,
-      panelWidth: 480,
+      panelWidth: 460,
       loadedSource: "Scratchpad starter",
       buffers: {
         javascript: "function greet(name) {\n  return `Hello, ${name}!`;\n}\n\nconsole.log(greet(\"Programmer\"));",
@@ -2367,13 +2357,13 @@
   }
 
   function getSplitPanelBounds() {
-    const min = 340;
+    const min = 380;
     const shell = document.querySelector(".page-shell");
     const shellWidth = Math.max(960, Math.floor(shell?.clientWidth || window.innerWidth));
     const railWidth = 280;
     const contentMin = shellWidth > 1500 ? 500 : shellWidth > 1280 ? 420 : 360;
     const gapAllowance = 44;
-    const naturalMax = Math.min(720, Math.floor(shellWidth * 0.32));
+    const naturalMax = Math.min(560, Math.floor(shellWidth * 0.34));
     const availableMax = Math.floor(shellWidth - railWidth - contentMin - gapAllowance);
     return {
       min,
@@ -2383,7 +2373,7 @@
 
   function getEffectiveWorkspacePanelWidth() {
     const bounds = getSplitPanelBounds();
-    return clamp(state.workspaceState.panelWidth || 480, bounds.min, bounds.max);
+    return clamp(state.workspaceState.panelWidth || 460, bounds.min, bounds.max);
   }
 
   function classifyGrowth(samples) {

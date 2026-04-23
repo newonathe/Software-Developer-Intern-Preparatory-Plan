@@ -27,7 +27,7 @@
   --radius-md: 16px;
   --max: 1600px;
   --page-shell-padding: clamp(12px, 2vw, 24px);
-  --workspace-panel-width: 480px;
+  --workspace-panel-width: 460px;
   --header-top: 12px;
   --header-height: 0px;
   --sticky-gap: 14px;
@@ -91,9 +91,9 @@ pre {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 10px 14px;
-  padding: 10px 14px;
-  margin-bottom: 18px;
+  gap: 12px 18px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
   background: rgba(8, 19, 34, 0.94);
   border: 1px solid var(--line);
   border-radius: 22px;
@@ -114,16 +114,15 @@ pre {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   min-width: 0;
 }
 
 .brand {
   display: inline-flex;
   flex-direction: column;
-  gap: 2px;
-  max-width: min(20rem, 100%);
+  gap: 4px;
+  max-width: min(21rem, 100%);
   text-decoration: none;
   min-width: 0;
 }
@@ -142,20 +141,20 @@ pre {
 
 .brand-title {
   font-family: var(--heading);
-  font-size: clamp(1rem, 1vw, 1.18rem);
+  font-size: clamp(1.25rem, 1.55vw, 1.8rem);
   font-weight: 700;
-  line-height: 1.08;
+  line-height: 1.05;
   overflow-wrap: anywhere;
 }
 
 .site-nav {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   min-width: 0;
   overflow-x: auto;
   overflow-y: hidden;
-  padding-bottom: 2px;
+  padding-bottom: 4px;
   scrollbar-width: thin;
 }
 
@@ -178,13 +177,13 @@ pre {
 .nav-link {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
-  padding: 7px 12px;
+  min-height: 44px;
+  padding: 10px 16px;
   border-radius: 999px;
   text-decoration: none;
   color: var(--text-soft);
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 1rem;
   white-space: nowrap;
   flex: 0 0 auto;
 }
@@ -204,8 +203,7 @@ pre {
 .global-status {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   min-width: 0;
 }
 
@@ -214,13 +212,17 @@ pre {
   justify-content: flex-end;
 }
 
+.global-status {
+  display: none;
+}
+
 .status-chip,
 .user-pill {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  border-radius: 16px;
+  border-radius: 999px;
   background: rgba(17, 35, 60, 0.96);
   border: 1px solid var(--line);
   box-shadow: none;
@@ -236,32 +238,35 @@ pre {
 .status-chip strong,
 .user-pill strong {
   display: block;
-  font-family: var(--mono);
-  font-size: 0.88rem;
+  font-family: var(--body);
+  font-size: 0.95rem;
   line-height: 1.2;
   overflow-wrap: anywhere;
 }
 
 .user-pill span {
   color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.2;
 }
 
 .user-pill {
-  justify-content: space-between;
   width: auto;
-  max-width: min(100%, 19rem);
+  max-width: min(100%, 15rem);
 }
 
 .user-pill-copy {
-  display: grid;
-  gap: 2px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
   min-width: 0;
   flex: 1 1 auto;
 }
 
 .site-header .ghost-button {
-  min-height: 36px;
-  padding: 8px 14px;
+  min-height: 40px;
+  padding: 8px 16px;
 }
 
 .ghost-button,
@@ -358,12 +363,9 @@ textarea:focus-visible {
 }
 
 .top-dock {
-  position: sticky;
-  top: var(--sticky-stack-top);
-  z-index: 40;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 16px;
 }
 
 .dock-card-wide {
@@ -386,7 +388,7 @@ textarea:focus-visible {
 }
 
 .dock-card {
-  padding: 16px;
+  padding: 18px;
   min-width: 0;
 }
 
@@ -409,7 +411,6 @@ textarea:focus-visible {
 .hero-pills,
 .inline-actions,
 .card-actions,
-.workspace-controls,
 .workspace-control-group {
   display: flex;
   flex-wrap: wrap;
@@ -420,7 +421,7 @@ textarea:focus-visible {
 .ide-layout {
   display: grid;
   grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
-  gap: 18px;
+  gap: 20px;
   align-items: start;
 }
 
@@ -428,7 +429,7 @@ textarea:focus-visible {
   grid-template-columns:
     minmax(240px, 280px)
     minmax(0, 1fr)
-    minmax(340px, min(32vw, var(--workspace-panel-width)));
+    minmax(380px, var(--workspace-panel-width));
 }
 
 .roadmap-rail,
@@ -476,8 +477,9 @@ textarea:focus-visible {
 
 .hero-terminal {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-  gap: 18px;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+  gap: 20px;
+  align-items: start;
   overflow: hidden;
   position: relative;
   container-type: inline-size;
@@ -552,7 +554,7 @@ textarea:focus-visible {
 
 .hero-terminal-panels {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  grid-template-columns: 1fr;
   gap: 14px;
 }
 
@@ -800,18 +802,26 @@ textarea:focus-visible {
 
 .workspace-controls {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  gap: 16px;
+  gap: 12px;
   margin: 18px 0;
 }
 
+.workspace-control-group {
+  align-items: center;
+}
+
+.workspace-control-group > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
 .workspace-grid {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-  align-items: start;
+  grid-template-columns: 1fr;
+  align-items: stretch;
 }
 
 .workspace-editor {
-  min-height: clamp(320px, 50vh, 520px);
+  min-height: clamp(280px, 38vh, 420px);
 }
 
 .workspace-output-pane {
@@ -820,19 +830,21 @@ textarea:focus-visible {
   min-width: 0;
 }
 
+.workspace-panel.full-page .workspace-grid {
+  grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
+}
+
+.workspace-panel.full-page .workspace-editor {
+  min-height: clamp(380px, 54vh, 560px);
+}
+
 .workspace-column {
   min-width: 0;
 }
 
-.studio-layout.split-mode .workspace-column {
-  position: sticky;
-  top: var(--sticky-stack-top);
-}
-
 .studio-layout.split-mode .workspace-column .workspace-panel {
-  max-height: calc(100vh - var(--sticky-stack-top) - 18px);
-  overflow: auto;
-  overscroll-behavior: contain;
+  max-height: none;
+  overflow: visible;
 }
 
 .history-stack {
@@ -875,17 +887,17 @@ textarea:focus-visible {
 }
 
 .slider-label {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
-  max-width: 100%;
+  width: 100%;
   color: var(--text-soft);
 }
 
 .workspace-width-range {
-  flex: 1 1 150px;
-  width: min(100%, 180px);
+  flex: 1 1 180px;
+  width: min(100%, 260px);
   min-width: 0;
 }
 
@@ -990,28 +1002,26 @@ textarea:focus-visible {
   }
 }
 
+@media (max-width: 1560px) {
+  .studio-layout.split-mode {
+    grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+  }
+
+  .studio-layout.split-mode .workspace-column {
+    grid-column: 1 / -1;
+  }
+}
+
 @media (max-width: 1360px) {
-  .top-dock,
   .studio-layout,
-  .studio-layout.split-mode,
   .ide-layout,
   .hero-terminal,
-  .workspace-grid,
+  .workspace-panel.full-page .workspace-grid,
   .challenge-results,
   .challenge-meta,
   .example-grid,
   .auth-grid {
     grid-template-columns: 1fr;
-  }
-
-  .top-dock,
-  .studio-layout.split-mode .workspace-column {
-    position: static;
-  }
-
-  .studio-layout.split-mode .workspace-column .workspace-panel {
-    max-height: none;
-    overflow: visible;
   }
 }
 
@@ -1036,6 +1046,10 @@ textarea:focus-visible {
     justify-content: flex-start;
   }
 
+  .header-account {
+    flex-wrap: wrap;
+  }
+
   .hero-terminal,
   .chapter-card,
   .interactive-card,
@@ -1056,9 +1070,18 @@ textarea:focus-visible {
     margin-inline: -2px;
   }
 
-  .header-meta,
   .user-pill {
+    max-width: 100%;
+  }
+
+  .header-meta,
+  .header-account {
     width: 100%;
+  }
+
+  .header-account .ghost-button {
+    width: 100%;
+    justify-content: center;
     max-width: 100%;
   }
 
@@ -1074,12 +1097,11 @@ textarea:focus-visible {
   }
 
   .top-dock {
-    position: static;
     grid-template-columns: 1fr;
   }
 
   .site-header {
-    padding: 10px 12px;
+    padding: 12px;
   }
 
   .hero-terminal,
@@ -1102,7 +1124,8 @@ textarea:focus-visible {
 @container (max-width: 760px) {
   .workspace-header,
   .workspace-controls,
-  .workspace-grid {
+  .workspace-grid,
+  .workspace-panel.full-page .workspace-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1114,5 +1137,10 @@ textarea:focus-visible {
   .slider-label,
   .workspace-width-range {
     width: 100%;
+  }
+
+  .workspace-control-group > :is(.ghost-button, .secondary-button) {
+    width: 100%;
+    justify-content: center;
   }
 }
